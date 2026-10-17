@@ -1,0 +1,1091 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AMARJIT — Full-Stack & Backend Systems Architect</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Syne (Display), Instrument Serif (Editorial Italic), JetBrains Mono (HUD), Inter (Body) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500;600&family=Syne:wght@700;800&display=swap"
+        rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        obsidian: '#060606',
+                        panel: '#0B0B0B',
+                        hairline: 'rgba(255, 255, 255, 0.12)',
+                        neonCyan: '#00F0FF',
+                        neonGreen: '#10B981',
+                        neonAmber: '#F59E0B',
+                        neonRose: '#F43F5E'
+                    },
+                    fontFamily: {
+                        display: ['Syne', 'sans-serif'],
+                        serif: ['Instrument Serif', 'serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                        sans: ['Inter', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            selection-background-color: #ffffff;
+            selection-color: #000000;
+        }
+
+        ::selection {
+            background: #ffffff;
+            color: #000000;
+        }
+
+        html,
+        body {
+            background-color: #060606;
+            color: #F4F4F5;
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+            scroll-behavior: smooth;
+        }
+
+        /* Subtle noise & dot matrix overlay */
+        .bg-dot-grid {
+            background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+            background-size: 28px 28px;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #060606;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #27272A;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: #52525B;
+        }
+
+        /* Floating Node Cards */
+        .node-card {
+            position: absolute;
+            border: 1px solid rgba(255, 255, 255, 0.16);
+            background: #0D0D0D;
+            border-radius: 6px;
+            overflow: hidden;
+            transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.25s ease,
+                box-shadow 0.25s ease;
+            will-change: transform;
+            cursor: pointer;
+        }
+
+        .node-card:hover {
+            z-index: 40 !important;
+            border-color: rgba(255, 255, 255, 0.65);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 25px rgba(255, 255, 255, 0.08);
+        }
+
+        .node-card img,
+        .node-card .node-visual {
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
+        }
+
+        .node-card:hover img,
+        .node-card:hover .node-visual {
+            transform: scale(1.07);
+            filter: brightness(1.12);
+        }
+
+        /* SVG Bezier Paths */
+        .bezier-cable {
+            fill: none;
+            stroke-width: 1.25;
+            opacity: 0.42;
+            transition: opacity 0.25s ease, stroke-width 0.25s ease, filter 0.25s ease;
+        }
+
+        .bezier-cable.active-cable {
+            opacity: 1;
+            stroke-width: 2.4;
+            filter: drop-shadow(0 0 8px currentColor);
+        }
+
+        /* Infinite Marquee Animation */
+        @keyframes marquee {
+            0% {
+                transform: translateX(0%);
+            }
+
+            100% {
+                transform: translateX(-50%);
+            }
+        }
+
+        .animate-marquee {
+            display: flex;
+            width: max-content;
+            white-space: nowrap;
+            animation: marquee 32s linear infinite;
+        }
+
+        .animate-marquee * {
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .animate-marquee:hover {
+            animation-play-state: paused;
+        }
+
+        /* Kinetic Hero Letters */
+        .hero-letter {
+            display: inline-block;
+            will-change: transform, opacity;
+            transition: transform 0.06s linear;
+        }
+
+        /* Bento Grid Card Hover */
+        .bento-cell {
+            border-right: 1px solid rgba(255, 255, 255, 0.12);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            background: #060606;
+            transition: background-color 0.3s ease;
+        }
+
+        .bento-cell:hover {
+            background: #0A0A0C;
+        }
+
+        .bento-media-wrap {
+            overflow: hidden;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .bento-media-wrap .bento-visual {
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .bento-cell:hover .bento-visual {
+            transform: scale(1.04);
+        }
+
+        /* Right HUD Elevator Item */
+        .hud-nav-item {
+            transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+    </style>
+</head>
+
+<body class="selection:bg-white selection:text-black">
+
+    <!-- ==================== TOP FIXED NAVBAR ==================== -->
+    <header
+        class="fixed top-0 left-0 right-0 h-14 bg-obsidian/85 backdrop-blur-md border-b border-hairline z-50 flex items-center justify-between px-4 lg:px-6">
+        <div class="flex items-center space-x-8">
+            <!-- Monogram Logo -->
+            <a href="#" class="flex items-center space-x-2.5 group">
+                <div
+                    class="w-7 h-7 bg-white text-black flex items-center justify-center font-display font-extrabold text-lg tracking-tighter group-hover:bg-neonCyan transition-colors">
+                    A
+                </div>
+                <span class="font-mono text-xs tracking-[0.2em] text-white hidden sm:inline">AMARJIT.SYS</span>
+            </a>
+
+            <!-- Technical Nav Links -->
+            <nav class="hidden md:flex items-center space-x-6 font-mono text-[11px] tracking-[0.16em] text-zinc-400">
+                <a href="#hero" class="hover:text-white transition-colors">NODE_GRAPH</a>
+                <a href="#systems" class="hover:text-white transition-colors">SYSTEMS</a>
+                <a href="#architecture" class="hover:text-white transition-colors">PHILOSOPHY</a>
+                <a href="#benchmarks" class="hover:text-white transition-colors">PROOF</a>
+                <a href="https://github.com" target="_blank" class="hover:text-white transition-colors">GITHUB ↗</a>
+            </nav>
+        </div>
+
+        <div class="flex items-center space-x-4">
+            <span
+                class="hidden sm:inline-flex items-center space-x-2 font-mono text-[10px] tracking-[0.15em] text-zinc-400 border border-hairline px-2.5 py-1">
+                <span class="w-1.5 h-1.5 rounded-full bg-neonGreen animate-pulse"></span>
+                <span>TECH LEAD // 4+ YRS EXP</span>
+            </span>
+            <a href="#contact"
+                class="bg-white text-black font-mono text-[11px] font-semibold tracking-[0.14em] px-4 py-2 hover:bg-neonCyan transition-colors">
+                INITIATE_BUILD
+            </a>
+        </div>
+    </header>
+
+    <!-- ==================== MAIN LAYOUT WRAPPER (LEFT CONTENT + RIGHT HUD RAIL) ==================== -->
+    <div class="relative flex min-h-screen pt-14">
+
+        <!-- LEFT / MAIN SCROLLABLE VIEWPORT -->
+        <main class="w-full lg:w-[calc(100%-220px)] relative">
+
+            <!-- ==================== 1. INTERACTIVE NODE-GRAPH HERO ==================== -->
+            <section id="hero"
+                class="relative w-full h-[94vh] min-h-[680px] overflow-hidden bg-dot-grid flex items-center justify-center border-b border-hairline select-none">
+
+                <!-- Dynamic SVG Bezier Node Web (Rendered & Updated by JS) -->
+                <svg id="node-svg" class="absolute inset-0 w-full h-full pointer-events-none z-10"></svg>
+
+                <!-- Floating Interactive Project/System Nodes -->
+                <div id="nodes-container" class="absolute inset-0 w-full h-full z-20 pointer-events-none">
+
+                    <!-- Node 1: Ojas WhatsApp Engine -->
+                    <div class="node-card pointer-events-auto w-48 sm:w-64 h-32" data-depth="0.045" data-color="#00F0FF"
+                        data-label="OJAS // FASTAPI + SHOPIFY" style="top: 8%; left: 6%;">
+                        <div
+                            class="node-visual w-full h-full bg-gradient-to-br from-cyan-950 via-zinc-900 to-black p-3 flex flex-col justify-between relative whitespace-nowrap">
+                            <div class="flex justify-between items-center font-mono text-[9px] text-cyan-400 whitespace-nowrap gap-2">
+                                <span class="whitespace-nowrap">NODE_01 // WEBHOOKS</span>
+                                <span class="whitespace-nowrap">99.9% SLA</span>
+                            </div>
+                            <div class="my-auto whitespace-nowrap">
+                                <div class="text-xs font-mono text-white font-semibold whitespace-nowrap">Ojas Automation Engine</div>
+                                <div class="text-[10px] text-zinc-400 mt-0.5 whitespace-nowrap">Async WhatsApp Order Pipeline</div>
+                            </div>
+                            <div class="h-1 w-full bg-zinc-800 overflow-hidden">
+                                <div class="h-full w-4/5 bg-neonCyan"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Node 2: UrbanNest SaaS -->
+                    <div class="node-card pointer-events-auto w-52 sm:w-72 h-36" data-depth="0.03" data-color="#F43F5E"
+                        data-label="URBANNEST // NEXT.JS + GCP" style="top: 6%; left: 41%;">
+                        <div
+                            class="node-visual w-full h-full bg-gradient-to-br from-rose-950/80 via-zinc-900 to-black p-3.5 flex flex-col justify-between whitespace-nowrap">
+                            <div class="flex justify-between items-center font-mono text-[9px] text-rose-400 whitespace-nowrap gap-2">
+                                <span class="whitespace-nowrap">NODE_02 // PROPTECH SAAS</span>
+                                <span class="whitespace-nowrap">MULTI-TENANT</span>
+                            </div>
+                            <div class="whitespace-nowrap">
+                                <div class="text-sm font-mono text-white font-semibold whitespace-nowrap">UrbanNest Platform</div>
+                                <div class="text-[11px] text-zinc-400 mt-0.5 whitespace-nowrap">Next.js + FastAPI + Cloud Run</div>
+                            </div>
+                            <div class="flex space-x-1.5 font-mono text-[9px] text-zinc-300 whitespace-nowrap">
+                                <span class="px-1.5 py-0.5 bg-white/10 whitespace-nowrap">REACT</span>
+                                <span class="px-1.5 py-0.5 bg-white/10 whitespace-nowrap">DOCKER</span>
+                                <span class="px-1.5 py-0.5 bg-white/10 whitespace-nowrap">GCP</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Node 3: Central Ticket SSO -->
+                    <div class="node-card pointer-events-auto w-48 sm:w-64 h-32" data-depth="0.055" data-color="#F59E0B"
+                        data-label="SSO ENGINE // AUTH TICKET" style="top: 9%; right: 7%;">
+                        <div
+                            class="node-visual w-full h-full bg-gradient-to-br from-amber-950/70 via-zinc-900 to-black p-3 flex flex-col justify-between whitespace-nowrap">
+                            <div class="flex justify-between font-mono text-[9px] text-amber-400 whitespace-nowrap gap-2">
+                                <span class="whitespace-nowrap">NODE_03 // SECURITY</span>
+                                <span class="whitespace-nowrap">JWT + FIREBASE</span>
+                            </div>
+                            <div class="whitespace-nowrap">
+                                <div class="text-xs font-mono text-white font-semibold whitespace-nowrap">Cross-Domain SSO</div>
+                                <div class="text-[10px] text-zinc-400 whitespace-nowrap">Ticket-Exchange Identity Mesh</div>
+                            </div>
+                            <div class="font-mono text-[9px] text-amber-300/80 whitespace-nowrap">losung360.com/*</div>
+                        </div>
+                    </div>
+
+                    <!-- Node 4: Project JARVIS -->
+                    <div class="node-card pointer-events-auto w-52 sm:w-64 h-40" data-depth="0.06" data-color="#10B981"
+                        data-label="JARVIS // DUAL-CORE ENGINE" style="top: 38%; left: 3%;">
+                        <div
+                            class="node-visual w-full h-full bg-gradient-to-br from-emerald-950/80 via-zinc-900 to-black p-3.5 flex flex-col justify-between whitespace-nowrap">
+                            <div class="flex justify-between font-mono text-[9px] text-emerald-400 whitespace-nowrap gap-2">
+                                <span class="whitespace-nowrap">NODE_04 // GAMIFIED OS</span>
+                                <span class="whitespace-nowrap">MONGODB + TS</span>
+                            </div>
+                            <div
+                                class="border border-emerald-500/30 bg-black/50 p-2 font-mono text-[10px] text-emerald-300 whitespace-nowrap">
+                                [SYSTEM ALERT]<br />
+                                DAILY QUEST: 200KG DL // CLEARED
+                            </div>
+                            <div class="text-xs font-mono text-white whitespace-nowrap">Project J.A.R.V.I.S. Core</div>
+                        </div>
+                    </div>
+
+                    <!-- Node 5: Decentro eKYC FinTech -->
+                    <div class="node-card pointer-events-auto w-52 sm:w-64 h-36" data-depth="0.04" data-color="#00F0FF"
+                        data-label="EKYC PIPELINE // DECENTRO" style="top: 36%; right: 4%;">
+                        <div
+                            class="node-visual w-full h-full bg-gradient-to-br from-sky-950/80 via-zinc-900 to-black p-3 flex flex-col justify-between whitespace-nowrap">
+                            <div class="flex justify-between font-mono text-[9px] text-sky-400 whitespace-nowrap gap-2">
+                                <span class="whitespace-nowrap">NODE_05 // FINTECH API</span>
+                                <span class="whitespace-nowrap">DIGILOCKER</span>
+                            </div>
+                            <div class="whitespace-nowrap">
+                                <div class="text-xs font-mono text-white font-semibold whitespace-nowrap">Automated eKYC Vault</div>
+                                <div class="text-[10px] text-zinc-400 mt-0.5 whitespace-nowrap">PAN, Bank & Registry Verification</div>
+                            </div>
+                            <div class="font-mono text-[9px] text-emerald-400 whitespace-nowrap">● VERIFIED STREAM</div>
+                        </div>
+                    </div>
+
+                    <!-- Node 6: FastShip Fulfillment -->
+                    <div class="node-card pointer-events-auto w-48 sm:w-64 h-32" data-depth="0.05" data-color="#10B981"
+                        data-label="FASTSHIP // MULTI-CARRIER" style="bottom: 10%; left: 8%;">
+                        <div
+                            class="node-visual w-full h-full bg-gradient-to-br from-teal-950/70 via-zinc-900 to-black p-3 flex flex-col justify-between whitespace-nowrap">
+                            <div class="flex justify-between font-mono text-[9px] text-teal-400 whitespace-nowrap gap-2">
+                                <span class="whitespace-nowrap">NODE_06 // SHOPIFY EXT</span>
+                                <span class="whitespace-nowrap">ADMIN UI</span>
+                            </div>
+                            <div class="whitespace-nowrap">
+                                <div class="text-xs font-mono text-white font-semibold whitespace-nowrap">FastShip Logistics</div>
+                                <div class="text-[10px] text-zinc-400 whitespace-nowrap">Multi-Carrier Dispatch Extension</div>
+                            </div>
+                            <div class="font-mono text-[9px] text-zinc-500 whitespace-nowrap">GRAPHQL // REST</div>
+                        </div>
+                    </div>
+
+                    <!-- Node 7: Gemini AI WhatsApp Support -->
+                    <div class="node-card pointer-events-auto w-48 sm:w-64 h-28" data-depth="0.035" data-color="#F59E0B"
+                        data-label="AI AGENT // FLASK + GEMINI" style="bottom: 7%; left: 38%;">
+                        <div
+                            class="node-visual w-full h-full bg-gradient-to-br from-amber-950/60 via-zinc-900 to-black p-3 flex flex-col justify-between whitespace-nowrap">
+                            <div class="font-mono text-[9px] text-amber-400 whitespace-nowrap">NODE_07 // LLM AGENT</div>
+                            <div class="text-xs font-mono text-white font-semibold whitespace-nowrap">Autonomous Support Bot</div>
+                            <div class="font-mono text-[9px] text-zinc-400 whitespace-nowrap">Flask + Gemini API + Webhooks</div>
+                        </div>
+                    </div>
+
+                    <!-- Node 8: Cloud & DevOps Infra -->
+                    <div class="node-card pointer-events-auto w-52 sm:w-72 h-34" data-depth="0.065" data-color="#F43F5E"
+                        data-label="INFRA // NGINX + DOCKER + GCP" style="bottom: 9%; right: 7%;">
+                        <div
+                            class="node-visual w-full h-full bg-gradient-to-br from-purple-950/70 via-zinc-900 to-black p-3 flex flex-col justify-between whitespace-nowrap">
+                            <div class="flex justify-between font-mono text-[9px] text-rose-400 whitespace-nowrap gap-2">
+                                <span class="whitespace-nowrap">NODE_08 // INFRASTRUCTURE</span>
+                                <span class="whitespace-nowrap">CI/CD</span>
+                            </div>
+                            <div class="my-1 whitespace-nowrap">
+                                <div class="text-xs font-mono text-white font-semibold whitespace-nowrap">Zero-Downtime Clusters</div>
+                                <div class="text-[10px] text-zinc-400 whitespace-nowrap">Cloud Run • Nginx • Gunicorn • systemd</div>
+                            </div>
+                            <div class="font-mono text-[9px] text-zinc-500 whitespace-nowrap">UPTIME // 99.98%</div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- CENTERPIECE HERO TYPOGRAPHY & CTAs -->
+                <div id="hero-center"
+                    class="relative z-30 text-center max-w-4xl px-6 py-8 bg-obsidian/70 backdrop-blur-md border border-white/10">
+                    <div
+                        class="inline-flex items-center space-x-2 font-mono text-[10px] tracking-[0.22em] text-neonCyan uppercase mb-3 whitespace-nowrap">
+                        <span>[ FULL-STACK & BACKEND TECH LEAD ]</span>
+                    </div>
+
+                    <!-- Scroll-Splitting Display Word -->
+                    <h1 id="kinetic-title"
+                        class="font-display font-extrabold text-5xl sm:text-7xl md:text-8xl tracking-tight text-white leading-none select-none flex justify-center space-x-1 sm:space-x-2 whitespace-nowrap">
+                        <span class="hero-letter" data-dir="-3.5">A</span>
+                        <span class="hero-letter" data-dir="-2.4">M</span>
+                        <span class="hero-letter" data-dir="-1.3">A</span>
+                        <span class="hero-letter" data-dir="-0.4">R</span>
+                        <span class="hero-letter" data-dir="0.4">J</span>
+                        <span class="hero-letter" data-dir="1.3">I</span>
+                        <span class="hero-letter" data-dir="2.4">T</span>
+                    </h1>
+
+                    <p class="mt-4 text-xl sm:text-2xl text-zinc-200 font-light whitespace-nowrap">
+                        Resilient <span class="font-serif italic text-white text-2xl sm:text-3xl">systems</span> for high-scale products.
+                    </p>
+
+                    <p class="mt-3 text-xs sm:text-sm text-zinc-400 max-w-none mx-auto leading-relaxed whitespace-nowrap">
+                        Yadav Amarjit Vinod architects distributed Python/FastAPI backends, Next.js frontends, and automated cloud infrastructure with uncompromising control.
+                    </p>
+
+                    <!-- Dual Brutalist Buttons -->
+                    <div class="mt-6 flex flex-wrap items-center justify-center gap-3">
+                        <a href="#systems"
+                            class="bg-white text-black font-mono text-xs font-semibold tracking-[0.15em] px-6 py-3 hover:bg-neonCyan transition-colors flex items-center space-x-2 whitespace-nowrap">
+                            <span>EXPLORE SYSTEMS</span>
+                            <span>↓</span>
+                        </a>
+                        <a href="#contact"
+                            class="border border-white/30 bg-black/60 text-white font-mono text-xs tracking-[0.15em] px-6 py-3 hover:border-white hover:bg-white/10 transition-all whitespace-nowrap">
+                            ARCHITECTURAL SPECS
+                        </a>
+                    </div>
+
+                    <!-- Technical Sub-Caption -->
+                    <div
+                        class="mt-5 pt-4 border-t border-hairline font-mono text-[10px] tracking-[0.16em] text-zinc-500 uppercase whitespace-nowrap">
+                        PYTHON • FASTAPI • NEXT.JS • TYPESCRIPT • MONGODB • GCP • DOCKER
+                    </div>
+                </div>
+
+            </section>
+
+            <!-- ==================== INFINITE CAPABILITY TICKER ==================== -->
+            <div class="w-full h-10 border-b border-hairline bg-obsidian overflow-hidden flex items-center select-none">
+                <div
+                    class="animate-marquee font-mono text-[11px] tracking-[0.18em] text-zinc-400 uppercase space-x-10 px-4 whitespace-nowrap shrink-0">
+                    <span class="whitespace-nowrap shrink-0">FASTAPI MICROSERVICES</span><span>•</span>
+                    <span class="whitespace-nowrap shrink-0">CENTRALIZED SSO AUTHENTICATION</span><span>•</span>
+                    <span class="whitespace-nowrap shrink-0">SHOPIFY ADMIN UI EXTENSIONS</span><span>•</span>
+                    <span class="whitespace-nowrap shrink-0">DECENTRO EKYC & DIGILOCKER PIPELINES</span><span>•</span>
+                    <span class="whitespace-nowrap shrink-0">GCP CLOUD RUN & DOCKER CI/CD</span><span>•</span>
+                    <span class="whitespace-nowrap shrink-0">NEXT.JS + TYPESCRIPT FULL-STACK</span><span>•</span>
+                    <span class="whitespace-nowrap shrink-0">WHATSAPP WEBHOOK AUTOMATION</span><span>•</span>
+                    <!-- Duplicate for seamless loop -->
+                    <span class="whitespace-nowrap shrink-0">FASTAPI MICROSERVICES</span><span>•</span>
+                    <span class="whitespace-nowrap shrink-0">CENTRALIZED SSO AUTHENTICATION</span><span>•</span>
+                    <span class="whitespace-nowrap shrink-0">SHOPIFY ADMIN UI EXTENSIONS</span><span>•</span>
+                    <span class="whitespace-nowrap shrink-0">DECENTRO EKYC & DIGILOCKER PIPELINES</span><span>•</span>
+                    <span class="whitespace-nowrap shrink-0">GCP CLOUD RUN & DOCKER CI/CD</span><span>•</span>
+                    <span class="whitespace-nowrap shrink-0">NEXT.JS + TYPESCRIPT FULL-STACK</span><span>•</span>
+                    <span class="whitespace-nowrap shrink-0">WHATSAPP WEBHOOK AUTOMATION</span><span>•</span>
+                </div>
+            </div>
+
+            <!-- ==================== 2. SECTION 01: PRODUCTION SYSTEMS (STICKY HEADER + 2-COL BENTO) ==================== -->
+            <section id="systems" data-hud-label="SYSTEMS" class="relative">
+
+                <!-- Sticky Section Sub-Header -->
+                <div
+                    class="sticky top-14 z-30 h-10 bg-obsidian/90 backdrop-blur-md border-b border-hairline px-6 flex items-center justify-between font-mono text-[11px] tracking-[0.16em] text-zinc-400">
+                    <div><span class="text-white">01</span> / PRODUCTION ARCHITECTURE</div>
+                    <div class="hidden sm:block">REAL SYSTEMS • ENGINEERED & DEPLOYED</div>
+                </div>
+
+                <!-- Editorial Intro Block -->
+                <div class="px-6 py-16 sm:py-20 border-b border-hairline max-w-4xl">
+                    <h2 class="text-4xl sm:text-6xl font-semibold tracking-tight text-white leading-[1.08]">
+                        The throughput that mere <span
+                            class="font-serif italic font-normal text-5xl sm:text-7xl text-neonCyan">templates</span>
+                        cannot buy.
+                    </h2>
+                    <p class="mt-5 text-zinc-400 text-base sm:text-lg max-w-xl leading-relaxed">
+                        Boilerplate is neat, but production traffic craves deterministic control. Compose the database
+                        schema, isolate the webhook queues, and let the infrastructure scale cleanly.
+                    </p>
+                </div>
+
+                <!-- 2-Column Exposed Hairline Bento Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-2">
+
+                    <!-- Cell 01: UrbanNest -->
+                    <article class="bento-cell p-6 sm:p-8 flex flex-col justify-between">
+                        <div>
+                            <div
+                                class="flex items-center justify-between font-mono text-[10px] tracking-[0.18em] text-zinc-400 pb-3 mb-5 border-b border-hairline">
+                                <span>PROPTECH SAAS // NEXT.JS + FASTAPI</span>
+                                <span class="text-white">01</span>
+                            </div>
+                            <div class="bento-media-wrap aspect-video bg-zinc-950 mb-6">
+                                <div
+                                    class="bento-visual w-full h-full bg-gradient-to-br from-rose-950/50 via-zinc-900 to-black p-6 flex flex-col justify-between">
+                                    <div class="flex justify-between items-center">
+                                        <span
+                                            class="font-mono text-[10px] px-2 py-1 bg-rose-500/20 text-rose-300 border border-rose-500/30">URBANNEST
+                                            CORE</span>
+                                        <span class="font-mono text-[10px] text-zinc-500">GCP CLOUD RUN</span>
+                                    </div>
+                                    <div class="grid grid-cols-3 gap-2 my-auto">
+                                        <div class="border border-white/10 bg-black/60 p-3">
+                                            <div class="font-mono text-[9px] text-zinc-500">TENANT LEDGER</div>
+                                            <div class="font-mono text-sm text-white mt-1">SYNCED</div>
+                                        </div>
+                                        <div class="border border-white/10 bg-black/60 p-3">
+                                            <div class="font-mono text-[9px] text-zinc-500">OCCUPANCY ENGINE</div>
+                                            <div class="font-mono text-sm text-neonGreen mt-1">REAL-TIME</div>
+                                        </div>
+                                        <div class="border border-white/10 bg-black/60 p-3">
+                                            <div class="font-mono text-[9px] text-zinc-500">API LATENCY</div>
+                                            <div class="font-mono text-sm text-neonCyan mt-1">&lt; 42ms</div>
+                                        </div>
+                                    </div>
+                                    <div class="font-mono text-[10px] text-zinc-500">STACK: NEXT.JS • REACT • FASTAPI •
+                                        PYTHON • GCP</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-xl sm:text-2xl font-semibold text-white">UrbanNest Property SaaS</h3>
+                            <p class="mt-2 text-sm text-zinc-400 leading-relaxed">
+                                End-to-end PG & property management platform. Engineered automated rent lifecycles, room
+                                inventory allocation, and multi-property analytics deployed on Google Cloud.
+                            </p>
+                        </div>
+                    </article>
+
+                    <!-- Cell 02: Ojas Shopify App -->
+                    <article class="bento-cell p-6 sm:p-8 flex flex-col justify-between">
+                        <div>
+                            <div
+                                class="flex items-center justify-between font-mono text-[10px] tracking-[0.18em] text-zinc-400 pb-3 mb-5 border-b border-hairline">
+                                <span>E-COMMERCE AUTOMATION // PYTHON + WEBHOOKS</span>
+                                <span class="text-white">02</span>
+                            </div>
+                            <div class="bento-media-wrap aspect-video bg-zinc-950 mb-6">
+                                <div
+                                    class="bento-visual w-full h-full bg-gradient-to-br from-cyan-950/50 via-zinc-900 to-black p-6 flex flex-col justify-between">
+                                    <div class="flex justify-between items-center">
+                                        <span
+                                            class="font-mono text-[10px] px-2 py-1 bg-cyan-500/20 text-cyan-300 border border-cyan-500/30">OJAS
+                                            ENGINE</span>
+                                        <span class="font-mono text-[10px] text-zinc-500">SHOPIFY + WHATSAPP API</span>
+                                    </div>
+                                    <div
+                                        class="border border-white/10 bg-black/60 p-4 font-mono text-xs text-zinc-300 space-y-1.5">
+                                        <div class="text-neonCyan">$ webhook.receive("orders/create")</div>
+                                        <div class="text-zinc-400">→ Validating HMAC signature... OK</div>
+                                        <div class="text-emerald-400">→ Dispatched WhatsApp template #ORD_CONFIRMED
+                                        </div>
+                                    </div>
+                                    <div class="font-mono text-[10px] text-zinc-500">EVENT-DRIVEN SCHEMA • IDEMPOTENT
+                                        RETRIES</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-xl sm:text-2xl font-semibold text-white">Ojas — WhatsApp Order Engine</h3>
+                            <p class="mt-2 text-sm text-zinc-400 leading-relaxed">
+                                High-concurrency Shopify application built with FastAPI. Processes real-time merchant
+                                webhooks to automate customer order notifications, COD verification, and conversational
+                                recovery.
+                            </p>
+                        </div>
+                    </article>
+
+                    <!-- Cell 03: Centralized Ticket-Exchange SSO -->
+                    <article class="bento-cell p-6 sm:p-8 flex flex-col justify-between">
+                        <div>
+                            <div
+                                class="flex items-center justify-between font-mono text-[10px] tracking-[0.18em] text-zinc-400 pb-3 mb-5 border-b border-hairline">
+                                <span>IDENTITY INFRASTRUCTURE // SSO + FIREBASE</span>
+                                <span class="text-white">03</span>
+                            </div>
+                            <div class="bento-media-wrap aspect-video bg-zinc-950 mb-6">
+                                <div
+                                    class="bento-visual w-full h-full bg-gradient-to-br from-amber-950/50 via-zinc-900 to-black p-6 flex flex-col justify-between">
+                                    <div class="flex justify-between items-center">
+                                        <span
+                                            class="font-mono text-[10px] px-2 py-1 bg-amber-500/20 text-amber-300 border border-amber-500/30">SSO
+                                            TICKET MESH</span>
+                                        <span class="font-mono text-[10px] text-zinc-500">CROSS-DOMAIN AUTH</span>
+                                    </div>
+                                    <div
+                                        class="flex items-center justify-between px-4 py-3 border border-white/10 bg-black/60 font-mono text-xs">
+                                        <span class="text-white">Auth Hub</span>
+                                        <span class="text-amber-400">══ Cryptographic Ticket ══►</span>
+                                        <span class="text-neonGreen">App Subdomains</span>
+                                    </div>
+                                    <div class="font-mono text-[10px] text-zinc-500">FASTAPI • REACT • FIREBASE AUTH •
+                                        ZERO SESSION LEAK</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-xl sm:text-2xl font-semibold text-white">Centralized Ticket-Exchange SSO
+                            </h3>
+                            <p class="mt-2 text-sm text-zinc-400 leading-relaxed">
+                                Unified Single Sign-On service authenticating users seamlessly across multiple
+                                enterprise domains using short-lived cryptographic ticket exchange.
+                            </p>
+                        </div>
+                    </article>
+
+                    <!-- Cell 04: Project JARVIS -->
+                    <article class="bento-cell p-6 sm:p-8 flex flex-col justify-between">
+                        <div>
+                            <div
+                                class="flex items-center justify-between font-mono text-[10px] tracking-[0.18em] text-zinc-400 pb-3 mb-5 border-b border-hairline">
+                                <span>DUAL-CORE SYSTEM // NEXT.JS + MONGODB</span>
+                                <span class="text-white">04</span>
+                            </div>
+                            <div class="bento-media-wrap aspect-video bg-zinc-950 mb-6">
+                                <div
+                                    class="bento-visual w-full h-full bg-gradient-to-br from-emerald-950/50 via-zinc-900 to-black p-6 flex flex-col justify-between">
+                                    <div class="flex justify-between items-center">
+                                        <span
+                                            class="font-mono text-[10px] px-2 py-1 bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">PROJECT
+                                            J.A.R.V.I.S.</span>
+                                        <span class="font-mono text-[10px] text-zinc-500">SOLO LEVELING HUD</span>
+                                    </div>
+                                    <div class="grid grid-cols-2 gap-3">
+                                        <div class="border border-emerald-500/30 bg-black/60 p-3 font-mono">
+                                            <div class="text-[9px] text-emerald-400">CORE A // ACADEMIC</div>
+                                            <div class="text-xs text-white mt-1">Syllabi & Mock Telemetry</div>
+                                        </div>
+                                        <div class="border border-cyan-500/30 bg-black/60 p-3 font-mono">
+                                            <div class="text-[9px] text-neonCyan">CORE B // BIOMETRICS</div>
+                                            <div class="text-xs text-white mt-1">XP Progression & Strength Log</div>
+                                        </div>
+                                    </div>
+                                    <div class="font-mono text-[10px] text-zinc-500">TYPESCRIPT • TAILWIND • MONGODB
+                                        AGGREGATIONS</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-xl sm:text-2xl font-semibold text-white">Project JARVIS — Dual-Core OS</h3>
+                            <p class="mt-2 text-sm text-zinc-400 leading-relaxed">
+                                Full-stack personal command center combining a high-density competitive exam analytics
+                                hub with an RPG-gamified calisthenics and strength tracker.
+                            </p>
+                        </div>
+                    </article>
+
+                    <!-- Cell 05: FastShip Admin Extension -->
+                    <article class="bento-cell p-6 sm:p-8 flex flex-col justify-between">
+                        <div>
+                            <div
+                                class="flex items-center justify-between font-mono text-[10px] tracking-[0.18em] text-zinc-400 pb-3 mb-5 border-b border-hairline">
+                                <span>LOGISTICS INFRA // SHOPIFY ADMIN UI</span>
+                                <span class="text-white">05</span>
+                            </div>
+                            <h3 class="text-xl sm:text-2xl font-semibold text-white mt-2">FastShip Multi-Carrier
+                                Fulfillment</h3>
+                            <p class="mt-2 text-sm text-zinc-400 leading-relaxed">
+                                Native Shopify Admin UI extension enabling merchants to compare courier rates, generate
+                                bulk AWBs, and orchestrate multi-carrier fulfillment directly inside Shopify Admin.
+                            </p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-hairline font-mono text-[10px] text-neonCyan">
+                            SHOPIFY EXTENSIONS API • REACT • REST/GRAPHQL
+                        </div>
+                    </article>
+
+                    <!-- Cell 06: Decentro eKYC Integration -->
+                    <article class="bento-cell p-6 sm:p-8 flex flex-col justify-between">
+                        <div>
+                            <div
+                                class="flex items-center justify-between font-mono text-[10px] tracking-[0.18em] text-zinc-400 pb-3 mb-5 border-b border-hairline">
+                                <span>FINTECH COMPLIANCE // PYTHON BACKEND</span>
+                                <span class="text-white">06</span>
+                            </div>
+                            <h3 class="text-xl sm:text-2xl font-semibold text-white mt-2">Decentro eKYC & DigiLocker
+                                Pipeline</h3>
+                            <p class="mt-2 text-sm text-zinc-400 leading-relaxed">
+                                Zero-friction identity and financial onboarding module integrating Decentro Public
+                                Registry, PAN verification, penny-drop bank validation, and DigiLocker APIs.
+                            </p>
+                        </div>
+                        <div class="mt-6 pt-4 border-t border-hairline font-mono text-[10px] text-neonGreen">
+                            PYTHON • ASYNCIO • PUBLIC REGISTRY • DIGILOCKER
+                        </div>
+                    </article>
+
+                </div>
+            </section>
+
+            <!-- ==================== 3. SECTION 02: ENGINEERING PHILOSOPHY ==================== -->
+            <section id="architecture" data-hud-label="PHILOSOPHY" class="relative">
+                <div
+                    class="sticky top-14 z-30 h-10 bg-obsidian/90 backdrop-blur-md border-b border-hairline px-6 flex items-center justify-between font-mono text-[11px] tracking-[0.16em] text-zinc-400">
+                    <div><span class="text-white">02</span> / ARCHITECTURAL OWNERSHIP</div>
+                    <div>CLEAN CODE • CLOUD NATIVE</div>
+                </div>
+
+                <div class="px-6 py-16 sm:py-20 border-b border-hairline">
+                    <h2 class="text-4xl sm:text-6xl font-semibold tracking-tight text-white max-w-2xl leading-[1.08]">
+                        Stop shipping fragile abstractions.
+                    </h2>
+                    <p class="mt-4 text-zinc-400 max-w-xl text-base sm:text-lg">
+                        Every system is designed for high observability, low latency, and clean horizontal scaling
+                        across bare-metal Linux Daemons or serverless containers.
+                    </p>
+                </div>
+
+                <!-- 3-Column Hairline Spec Grid -->
+                <div class="grid grid-cols-1 md:grid-cols-3">
+                    <div class="bento-cell p-6 sm:p-8">
+                        <div class="font-mono text-xs text-zinc-500 mb-6">1</div>
+                        <h3 class="text-xl font-semibold text-white">Async-First Backends</h3>
+                        <p class="mt-2 text-sm text-zinc-400 leading-relaxed">
+                            Engineered on Python, FastAPI, and Flask with non-blocking I/O, strict Pydantic validation,
+                            and optimized MongoDB/SQL indexing.
+                        </p>
+                    </div>
+                    <div class="bento-cell p-6 sm:p-8">
+                        <div class="font-mono text-xs text-zinc-500 mb-6">2</div>
+                        <h3 class="text-xl font-semibold text-white">Production Hardened</h3>
+                        <p class="mt-2 text-sm text-zinc-400 leading-relaxed">
+                            Reverse-proxied through Nginx, managed via Gunicorn & systemd workers, or containerized on
+                            GCP Cloud Run with automated Cloud Build CI/CD.
+                        </p>
+                    </div>
+                    <div class="bento-cell p-6 sm:p-8">
+                        <div class="font-mono text-xs text-zinc-500 mb-6">3</div>
+                        <h3 class="text-xl font-semibold text-white">Reactive Frontends</h3>
+                        <p class="mt-2 text-sm text-zinc-400 leading-relaxed">
+                            Type-safe Next.js and React interfaces styled with Tailwind CSS—delivering sub-second
+                            interactions and crystal-clear operator dashboards.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==================== 4. SECTION 03: BENCHMARKS & PROOF ==================== -->
+            <section id="benchmarks" data-hud-label="PROOF" class="relative">
+                <div
+                    class="sticky top-14 z-30 h-10 bg-obsidian/90 backdrop-blur-md border-b border-hairline px-6 flex items-center justify-between font-mono text-[11px] tracking-[0.16em] text-zinc-400">
+                    <div><span class="text-white">03</span> / TELEMETRY & DISCIPLINE</div>
+                    <div>ENGINEERING + ATHLETIC GRIT</div>
+                </div>
+
+                <div class="px-6 py-14 border-b border-hairline">
+                    <h2 class="text-4xl sm:text-5xl font-semibold text-white">
+                        Built with <span class="font-serif italic font-normal text-5xl sm:text-6xl">precision.</span>
+                    </h2>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3">
+                    <!-- Proof Card A1 -->
+                    <div class="bento-cell p-6">
+                        <div
+                            class="flex justify-between font-mono text-[10px] tracking-[0.16em] pb-3 mb-4 border-b border-hairline">
+                            <span class="text-zinc-400">EXPERIENCE METRIC</span>
+                            <span class="text-neonGreen font-bold">A1</span>
+                        </div>
+                        <div class="py-8 text-center border border-white/10 bg-zinc-950/60 mb-4">
+                            <div class="font-display text-5xl font-extrabold text-white">4+ YRS</div>
+                            <div class="font-mono text-[10px] text-zinc-400 mt-2 tracking-widest">FULL-STACK & TECH LEAD
+                            </div>
+                        </div>
+                        <p class="text-xs text-zinc-400">Leading architecture across SaaS, FinTech eKYC, and E-commerce
+                            automation ecosystems.</p>
+                    </div>
+
+                    <!-- Proof Card A2 -->
+                    <div class="bento-cell p-6">
+                        <div
+                            class="flex justify-between font-mono text-[10px] tracking-[0.16em] pb-3 mb-4 border-b border-hairline">
+                            <span class="text-zinc-400">CLOUD DEPLOYMENTS</span>
+                            <span class="text-neonGreen font-bold">A2</span>
+                        </div>
+                        <div class="py-8 text-center border border-white/10 bg-zinc-950/60 mb-4">
+                            <div class="font-display text-5xl font-extrabold text-neonCyan">GCP // CI</div>
+                            <div class="font-mono text-[10px] text-zinc-400 mt-2 tracking-widest">DOCKER • CLOUD RUN •
+                                NGINX</div>
+                        </div>
+                        <p class="text-xs text-zinc-400">Automated container pipelines, zero-downtime rollouts, and
+                            reverse-proxy security hardening.</p>
+                    </div>
+
+                    <!-- Proof Card A3 -->
+                    <div class="bento-cell p-6">
+                        <div
+                            class="flex justify-between font-mono text-[10px] tracking-[0.16em] pb-3 mb-4 border-b border-hairline">
+                            <span class="text-zinc-400">PHYSICAL BENCHMARK</span>
+                            <span class="text-neonGreen font-bold">A3</span>
+                        </div>
+                        <div class="py-8 text-center border border-white/10 bg-zinc-950/60 mb-4">
+                            <div class="font-display text-5xl font-extrabold text-white">200 KG</div>
+                            <div class="font-mono text-[10px] text-zinc-400 mt-2 tracking-widest">DEADLIFT // 4:05/KM
+                                PACE</div>
+                        </div>
+                        <p class="text-xs text-zinc-400">High-output discipline inside the terminal and under the
+                            barbell—strength training, MMA, and endurance running.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- ==================== 5. GET STARTED CTA & FOOTER ==================== -->
+            <section id="contact" data-hud-label="DEPLOY" class="relative border-b border-hairline">
+                <div class="px-6 py-24 text-center max-w-3xl mx-auto">
+                    <div class="font-mono text-[10px] tracking-[0.22em] text-zinc-400 uppercase mb-3">
+                        AVAILABLE FOR HIGH-IMPACT ARCHITECTURE & LEADERSHIP
+                    </div>
+                    <h2 class="text-5xl sm:text-7xl font-semibold text-white tracking-tight">
+                        Start <span class="font-serif italic font-normal">shipping.</span>
+                    </h2>
+                    <p class="mt-4 text-zinc-400 text-sm sm:text-base max-w-md mx-auto">
+                        Need a Tech Lead to architect your next SaaS platform, scale a Python/FastAPI backend, or ship a
+                        full-stack Next.js product?
+                    </p>
+                    <div class="mt-8 flex flex-wrap justify-center gap-4">
+                        <a href="mailto:amarjit@example.com"
+                            class="bg-white text-black font-mono text-xs font-semibold tracking-[0.15em] px-7 py-3.5 hover:bg-neonCyan transition-colors">
+                            DISPATCH EMAIL ↗
+                        </a>
+                        <a href="https://github.com" target="_blank"
+                            class="border border-white/30 text-white font-mono text-xs tracking-[0.15em] px-7 py-3.5 hover:border-white hover:bg-white/10 transition-colors">
+                            VIEW GITHUB REPOS
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Brutalist Multi-Column Footer -->
+            <footer class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 border-b border-hairline text-xs">
+                <div class="p-6 border-r border-b border-hairline lg:col-span-2 flex flex-col justify-between">
+                    <div>
+                        <div
+                            class="w-7 h-7 bg-white text-black flex items-center justify-center font-display font-extrabold text-lg">
+                            A</div>
+                        <p class="mt-4 text-zinc-400 max-w-xs leading-relaxed">
+                            Yadav Amarjit Vinod — Full-Stack Developer & Backend Tech Lead based in New Delhi, India.
+                        </p>
+                    </div>
+                    <div class="mt-8 font-mono text-[10px] text-zinc-500 tracking-widest">
+                        © 2026 AMARJIT.SYS // ALL RIGHTS RESERVED
+                    </div>
+                </div>
+
+                <div class="p-6 border-r border-b border-hairline">
+                    <div class="font-mono text-[10px] tracking-[0.18em] text-zinc-500 uppercase mb-4">CORE STACK</div>
+                    <ul class="space-y-2.5 text-zinc-300 font-mono text-[11px]">
+                        <li>Python / FastAPI</li>
+                        <li>Next.js / React</li>
+                        <li>TypeScript / JS</li>
+                        <li>MongoDB / SQL</li>
+                        <li>Tailwind CSS</li>
+                    </ul>
+                </div>
+
+                <div class="p-6 border-r border-b border-hairline">
+                    <div class="font-mono text-[10px] tracking-[0.18em] text-zinc-500 uppercase mb-4">SHIPPED SYSTEMS
+                    </div>
+                    <ul class="space-y-2.5 text-zinc-300 font-mono text-[11px]">
+                        <li>UrbanNest SaaS</li>
+                        <li>Ojas WhatsApp App</li>
+                        <li>Project JARVIS</li>
+                        <li>FastShip Extension</li>
+                        <li>Ticket-Exchange SSO</li>
+                        <li>Decentro eKYC</li>
+                    </ul>
+                </div>
+
+                <div class="p-6 border-b border-hairline">
+                    <div class="font-mono text-[10px] tracking-[0.18em] text-zinc-500 uppercase mb-4">INFRASTRUCTURE
+                    </div>
+                    <ul class="space-y-2.5 text-zinc-300 font-mono text-[11px]">
+                        <li>Google Cloud Platform</li>
+                        <li>Cloud Run & Build</li>
+                        <li>Docker Containers</li>
+                        <li>Nginx & Gunicorn</li>
+                        <li>Linux systemd</li>
+                    </ul>
+                </div>
+            </footer>
+
+        </main>
+
+        <!-- ==================== RIGHT-HAND PRECISION RULER & ELEVATOR HUD ==================== -->
+        <aside
+            class="hidden lg:flex flex-col justify-between w-[220px] fixed right-0 top-14 bottom-0 bg-obsidian border-l border-hairline z-40 select-none pointer-events-none">
+
+            <!-- Top Active Section Readout (The "Elevator" Dock) -->
+            <div class="p-5 border-b border-hairline">
+                <div class="font-mono text-[9px] tracking-[0.2em] text-zinc-500 uppercase">ACTIVE_SECTION //</div>
+                <div id="hud-active-title"
+                    class="font-mono text-sm font-semibold tracking-[0.18em] text-white mt-1 transition-all">
+                    NODE_GRAPH
+                </div>
+            </div>
+
+            <!-- Vertical Caliper / Ruler Tick Marks along Far-Right Edge -->
+            <div id="ruler-ticks"
+                class="relative flex-1 flex flex-col justify-between py-6 pr-2 items-end font-mono text-[9px] text-zinc-600">
+                <div class="flex items-center space-x-2"><span>50</span><span class="w-3 h-[1px] bg-zinc-700"></span>
+                </div>
+                <div class="w-1.5 h-[1px] bg-zinc-800"></div>
+                <div class="w-1.5 h-[1px] bg-zinc-800"></div>
+                <div class="w-2.5 h-[1px] bg-zinc-700"></div>
+                <div class="w-1.5 h-[1px] bg-zinc-800"></div>
+                <div class="flex items-center space-x-2"><span>40</span><span class="w-3 h-[1px] bg-zinc-700"></span>
+                </div>
+                <div class="w-1.5 h-[1px] bg-zinc-800"></div>
+                <div class="w-2.5 h-[1px] bg-zinc-700"></div>
+                <div class="w-1.5 h-[1px] bg-zinc-800"></div>
+                <div class="flex items-center space-x-2"><span>30</span><span class="w-3 h-[1px] bg-zinc-700"></span>
+                </div>
+                <div class="w-1.5 h-[1px] bg-zinc-800"></div>
+                <div class="w-2.5 h-[1px] bg-zinc-700"></div>
+                <div class="w-1.5 h-[1px] bg-zinc-800"></div>
+                <div class="flex items-center space-x-2"><span>20</span><span class="w-3 h-[1px] bg-zinc-700"></span>
+                </div>
+                <div class="w-1.5 h-[1px] bg-zinc-800"></div>
+                <div class="w-2.5 h-[1px] bg-zinc-700"></div>
+                <div class="w-1.5 h-[1px] bg-zinc-800"></div>
+                <div class="flex items-center space-x-2"><span>10</span><span class="w-3 h-[1px] bg-zinc-700"></span>
+                </div>
+                <div class="w-1.5 h-[1px] bg-zinc-800"></div>
+                <div class="flex items-center space-x-2"><span>0</span><span class="w-3 h-[1px] bg-zinc-700"></span>
+                </div>
+
+                <!-- Dynamic Scroll Progress Indicator Bar on Ruler -->
+                <div id="ruler-cursor"
+                    class="absolute right-0 w-4 h-[2px] bg-neonCyan shadow-[0_0_8px_#00F0FF] transition-all duration-75"
+                    style="top: 0%;"></div>
+            </div>
+
+            <!-- Bottom Queued Section Stack -->
+            <div class="p-5 border-t border-hairline pointer-events-auto">
+                <div class="font-mono text-[9px] tracking-[0.2em] text-zinc-600 uppercase mb-2.5">INDEX_QUEUE</div>
+                <ul id="hud-queue" class="space-y-1.5 font-mono text-[11px] tracking-[0.16em]">
+                    <li><a href="#systems" data-target="SYSTEMS"
+                            class="hud-nav-item block text-zinc-500 hover:text-white">SYSTEMS</a></li>
+                    <li><a href="#architecture" data-target="PHILOSOPHY"
+                            class="hud-nav-item block text-zinc-500 hover:text-white">PHILOSOPHY</a></li>
+                    <li><a href="#benchmarks" data-target="PROOF"
+                            class="hud-nav-item block text-zinc-500 hover:text-white">PROOF</a></li>
+                    <li><a href="#contact" data-target="DEPLOY"
+                            class="hud-nav-item block text-zinc-500 hover:text-white">DEPLOY</a></li>
+                </ul>
+            </div>
+
+        </aside>
+
+    </div>
+
+    <!-- ==================== INTERACTIVE PHYSICS, SVG BEZIER & SCROLL ENGINE ==================== -->
+    <script>
+        const heroSection = document.getElementById('hero');
+        const svgCanvas = document.getElementById('node-svg');
+        const heroCenter = document.getElementById('hero-center');
+        const nodeCards = Array.from(document.querySelectorAll('.node-card'));
+        const heroLetters = Array.from(document.querySelectorAll('.hero-letter'));
+        const hudActiveTitle = document.getElementById('hud-active-title');
+        const rulerCursor = document.getElementById('ruler-cursor');
+        const hudQueueLinks = Array.from(document.querySelectorAll('#hud-queue a'));
+
+        let mouseX = 0, mouseY = 0;
+        let targetX = 0, targetY = 0;
+        let hoveredCardIndex = -1;
+
+        // 1. Create SVG Cubic-Bezier Paths for each Floating Node
+        const svgPaths = nodeCards.map((card, index) => {
+            const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+            const color = card.getAttribute('data-color') || '#00F0FF';
+            path.setAttribute('stroke', color);
+            path.setAttribute('class', 'bezier-cable');
+            svgCanvas.appendChild(path);
+
+            // Hover state highlights connected SVG cable
+            card.addEventListener('mouseenter', () => {
+                hoveredCardIndex = index;
+                path.classList.add('active-cable');
+            });
+            card.addEventListener('mouseleave', () => {
+                hoveredCardIndex = -1;
+                path.classList.remove('active-cable');
+            });
+
+            return path;
+        });
+
+        // Track cursor relative to Hero center
+        window.addEventListener('mousemove', (e) => {
+            const rect = heroSection.getBoundingClientRect();
+            targetX = e.clientX - (rect.left + rect.width / 2);
+            targetY = e.clientY - (rect.top + rect.height / 2);
+        });
+
+        // 2. Render Loop: Smooth Parallax + Live SVG Bezier Recalculation
+        function animateHeroNodes() {
+            // Smooth interpolation (lerp)
+            mouseX += (targetX - mouseX) * 0.08;
+            mouseY += (targetY - mouseY) * 0.08;
+
+            const heroRect = heroSection.getBoundingClientRect();
+            // Only compute heavy DOM rects when hero is visible
+            if (heroRect.bottom > 0) {
+                const centerRect = heroCenter.getBoundingClientRect();
+                const startX = (centerRect.left + centerRect.width / 2) - heroRect.left;
+                const startY = (centerRect.top + centerRect.height / 2) - heroRect.top;
+
+                nodeCards.forEach((card, i) => {
+                    const depth = parseFloat(card.getAttribute('data-depth')) || 0.04;
+                    const moveX = -mouseX * depth;
+                    const moveY = -mouseY * depth;
+                    const scale = hoveredCardIndex === i ? 1.07 : 1;
+
+                    card.style.transform = `translate3d(${moveX}px, ${moveY}px, 0) scale(${scale})`;
+
+                    // Calculate card center relative to hero SVG
+                    const cardRect = card.getBoundingClientRect();
+                    const endX = (cardRect.left + cardRect.width / 2) - heroRect.left;
+                    const endY = (cardRect.top + cardRect.height / 2) - heroRect.top;
+
+                    // S-curve Cubic Bezier control points
+                    const ctrlX1 = startX + (endX - startX) * 0.55;
+                    const ctrlY1 = startY;
+                    const ctrlX2 = startX + (endX - startX) * 0.45;
+                    const ctrlY2 = endY;
+
+                    const d = `M ${startX} ${startY} C ${ctrlX1} ${ctrlY1}, ${ctrlX2} ${ctrlY2}, ${endX} ${endY}`;
+                    svgPaths[i].setAttribute('d', d);
+                });
+            }
+
+            requestAnimationFrame(animateHeroNodes);
+        }
+        requestAnimationFrame(animateHeroNodes);
+
+        // 3. Scroll Effects: Hero Letter Split + Right-Hand Ruler & Section Elevator
+        const trackedSections = Array.from(document.querySelectorAll('section[data-hud-label]'));
+
+        window.addEventListener('scroll', () => {
+            const scrollY = window.scrollY;
+            const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
+            const scrollPercent = Math.min(100, Math.max(0, (scrollY / maxScroll) * 100));
+
+            // Update Right Ruler Cursor
+            if (rulerCursor) {
+                rulerCursor.style.top = `${scrollPercent}%`;
+            }
+
+            // Kinetic Hero Title Split on Scroll (0px -> 500px)
+            if (scrollY < 600) {
+                const progress = scrollY / 420;
+                heroLetters.forEach((letter) => {
+                    const dir = parseFloat(letter.getAttribute('data-dir')) || 0;
+                    const spreadX = dir * progress * 55;
+                    const liftY = -progress * 28;
+                    letter.style.transform = `translate3d(${spreadX}px, ${liftY}px, 0)`;
+                });
+            }
+
+            // Determine Active Section for Right-Hand HUD Elevator
+            let currentLabel = 'NODE_GRAPH';
+            trackedSections.forEach((sec) => {
+                const rect = sec.getBoundingClientRect();
+                if (rect.top <= window.innerHeight * 0.35) {
+                    currentLabel = sec.getAttribute('data-hud-label');
+                }
+            });
+
+            if (hudActiveTitle && hudActiveTitle.textContent !== currentLabel) {
+                hudActiveTitle.textContent = currentLabel;
+            }
+
+            // Highlight active item in bottom queue
+            hudQueueLinks.forEach((link) => {
+                if (link.getAttribute('data-target') === currentLabel) {
+                    link.classList.add('text-neonCyan', 'translate-x-1');
+                    link.classList.remove('text-zinc-500');
+                } else {
+                    link.classList.remove('text-neonCyan', 'translate-x-1');
+                    link.classList.add('text-zinc-500');
+                }
+            });
+        }, { passive: true });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,231 @@
+@import "tailwindcss";
+
+@theme {
+  --color-obsidian: #060606;
+  --color-panel: #0b0b0b;
+  --color-hairline: rgba(255, 255, 255, 0.12);
+  --color-neonCyan: #00f0ff;
+  --color-neonGreen: #10b981;
+  --color-neonAmber: #f59e0b;
+  --color-neonRose: #f43f5e;
+  
+  --font-display: 'Syne', sans-serif;
+  --font-serif: 'Instrument Serif', serif;
+  --font-mono: 'JetBrains Mono', monospace;
+  --font-sans: 'Inter', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::selection {
+  background: #ffffff;
+  color: #000000;
+}
+
+html,
+body {
+  background-color: #060606;
+  color: #F4F4F5;
+  font-family: 'Inter', sans-serif;
+  overflow-x: hidden;
+  scroll-behavior: smooth;
+  margin: 0;
+  padding: 0;
+}
+
+/* Subtle dot matrix overlay */
+.bg-dot-grid {
+  background-image: radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px);
+  background-size: 28px 28px;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 5px;
+}
+
+::-webkit-scrollbar-track {
+  background: #060606;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #27272A;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #52525B;
+}
+
+/* Orbital Card Base Styling with Curved Organic Bezel */
+.orbit-card {
+  position: absolute;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  background: #0D0D0D;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: border-radius 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    border-color 0.25s ease,
+    box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform, border-radius;
+  cursor: pointer;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 1px rgba(255, 255, 255, 0.2);
+}
+
+.orbit-card:hover {
+  border-color: rgba(255, 255, 255, 0.85);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.95), 0 0 30px rgba(0, 240, 255, 0.2);
+}
+
+/* Internal Visual Zoom */
+.orbit-card .card-media {
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), filter 0.3s ease;
+}
+
+.orbit-card:hover .card-media {
+  transform: scale(1.08);
+  filter: brightness(1.15) contrast(1.05);
+}
+
+/* SVG Orbit Rings */
+.orbit-ring {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.08);
+  stroke-width: 1;
+}
+
+.orbit-ring-dashed {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.12);
+  stroke-width: 1;
+  stroke-dasharray: 4 10;
+}
+
+/* Traveling Neon Orbit Light Beams */
+@keyframes orbitTravel1 {
+  0% {
+    stroke-dashoffset: 2700;
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.95;
+  }
+  75% {
+    opacity: 0.95;
+  }
+  95%, 100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes orbitTravel2 {
+  0% {
+    stroke-dashoffset: 3720;
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.9;
+  }
+  80% {
+    opacity: 0.9;
+  }
+  95%, 100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+
+@keyframes orbitTravel3 {
+  0% {
+    stroke-dashoffset: 4710;
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.85;
+  }
+  85% {
+    opacity: 0.85;
+  }
+  95%, 100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+
+.animate-orbit-travel-1 {
+  animation: orbitTravel1 8s linear infinite;
+}
+
+.animate-orbit-travel-2 {
+  animation: orbitTravel2 13s linear infinite;
+}
+
+.animate-orbit-travel-3 {
+  animation: orbitTravel3 18s linear infinite;
+}
+
+/* Infinite Marquee Animation */
+@keyframes marquee {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
+}
+
+.animate-marquee {
+  display: flex;
+  width: max-content;
+  white-space: nowrap;
+  animation: marquee 32s linear infinite;
+}
+
+.animate-marquee * {
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+
+.animate-marquee:hover {
+  animation-play-state: paused;
+}
+
+/* Kinetic Hero Letters */
+.hero-letter {
+  display: inline-block;
+  will-change: transform, opacity;
+  transition: transform 0.06s linear;
+}
+
+/* Bento Grid Card Hover */
+.bento-cell {
+  border-right: 1px solid rgba(255, 255, 255, 0.12);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  background: #060606;
+  transition: background-color 0.3s ease;
+}
+
+.bento-cell:hover {
+  background: #0A0A0C;
+}
+
+.bento-media-wrap {
+  overflow: hidden;
+  position: relative;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.bento-media-wrap .bento-visual {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.bento-cell:hover .bento-visual {
+  transform: scale(1.03);
+}
+
+/* Right HUD Elevator Item */
+.hud-nav-item {
+  transition: all 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+}

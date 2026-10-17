@@ -1,0 +1,480 @@
+export const DEVELOPER_PROFILE = {
+  name: "Yadav Amarjit Vinod",
+  shortName: "AMARJIT",
+  systemName: "AMARJIT.SYS",
+  title: "Full-Stack & Backend Systems Architect // Tech Lead",
+  experienceYears: "4+ YRS EXP",
+  location: "New Delhi, India",
+  email: "yadavamarjit772@gmail.com",
+  linkedin: "https://www.linkedin.com/in/yadav-amarjit/",
+  github: "https://github.com",
+  bio: "Architecting deterministic, high-throughput distributed backends in Python/FastAPI, sub-second reactive Next.js applications, and production-hardened GCP container infrastructure with uncompromising control.",
+};
+
+// 8 Precision Architectural System Nodes (Matching Image 2 Specification)
+export const HERO_NODES = [
+  {
+    id: "node-ojas",
+    nodeCode: "NODE_01 // WEBHOOKS",
+    rightTag: "99.9% SLA",
+    title: "Ojas Automation Engine",
+    subtitle: "Async WhatsApp Order Pipeline",
+    accentColor: "#00F0FF",
+    hasProgressBar: true,
+    width: 285,
+    height: 125,
+    systemId: "ojas",
+    track: 1,
+    initialAngle: -Math.PI * 0.78, // Top-Left (~-140 deg)
+  },
+  {
+    id: "node-urbannest",
+    nodeCode: "NODE_02 // PROPTECH SAAS",
+    rightTag: "MULTI-TENANT",
+    title: "UrbanNest Platform",
+    subtitle: "Next.js + FastAPI + Cloud Run",
+    accentColor: "#F43F5E",
+    badges: ["REACT", "DOCKER", "GCP"],
+    width: 300,
+    height: 135,
+    systemId: "urbannest",
+    track: 1,
+    initialAngle: -Math.PI * 0.50, // Top-Center (-90 deg)
+  },
+  {
+    id: "node-sso",
+    nodeCode: "NODE_03 // SECURITY",
+    rightTag: "JWT + FIREBASE",
+    title: "Cross-Domain SSO",
+    subtitle: "Ticket-Exchange Identity Mesh",
+    accentColor: "#F59E0B",
+    urlBadge: "losung360.com/*",
+    width: 295,
+    height: 125,
+    systemId: "sso",
+    track: 1,
+    initialAngle: -Math.PI * 0.22, // Top-Right (~-40 deg)
+  },
+  {
+    id: "node-jarvis",
+    nodeCode: "NODE_04 // GAMIFIED OS",
+    rightTag: "MONGODB",
+    title: "Project J.A.R.V.I.S. Core",
+    accentColor: "#10B981",
+    terminalSnippet: {
+      alert: "[SYSTEM ALERT]",
+      detail: "DAILY QUEST: 200KG DL // CLEAR...",
+    },
+    width: 295,
+    height: 140,
+    systemId: "jarvis",
+    track: 2,
+    initialAngle: Math.PI, // Mid-Left (180 deg)
+  },
+  {
+    id: "node-ekyc",
+    nodeCode: "NODE_05 // FINTECH API",
+    rightTag: "DIGILOCKER",
+    title: "Automated eKYC Vault",
+    subtitle: "Bank & Registry Verification",
+    accentColor: "#00F0FF",
+    streamBadge: "VERIFIED STREAM",
+    width: 290,
+    height: 125,
+    systemId: "ekyc",
+    track: 2,
+    initialAngle: 0, // Mid-Right (0 deg)
+  },
+  {
+    id: "node-fastship",
+    nodeCode: "NODE_06 // SHOPIFY EXT",
+    rightTag: "ADMIN UI",
+    title: "FastShip Logistics",
+    subtitle: "Multi-Carrier Dispatch Extension",
+    accentColor: "#00F0FF",
+    badges: ["GRAPHQL // REST"],
+    width: 290,
+    height: 125,
+    systemId: "fastship",
+    track: 3,
+    initialAngle: Math.PI * 0.78, // Bottom-Left (~140 deg)
+  },
+  {
+    id: "node-askamar",
+    nodeCode: "NODE_07 // LLM AGENT",
+    rightTag: "GEMINI API",
+    title: "Autonomous Support Bot",
+    subtitle: "Flask + Gemini API + Webhooks",
+    accentColor: "#F59E0B",
+    width: 285,
+    height: 125,
+    systemId: "askamar",
+    track: 3,
+    initialAngle: Math.PI * 0.50, // Bottom-Center (90 deg)
+  },
+  {
+    id: "node-infra",
+    nodeCode: "NODE_08 // INFRASTRUCTURE",
+    rightTag: "CI/CD",
+    title: "Zero-Downtime Clusters",
+    subtitle: "Cloud Run • Nginx • Gunicorn • systemd",
+    accentColor: "#EC4899",
+    metric: "UPTIME // 99.98%",
+    width: 315,
+    height: 130,
+    systemId: "urbannest",
+    track: 3,
+    initialAngle: Math.PI * 0.22, // Bottom-Right (~40 deg)
+  },
+];
+
+export const SHIPPED_SYSTEMS = [
+  {
+    id: "urbannest",
+    num: "01",
+    nodeCode: "NODE_01 // PROPTECH SAAS",
+    statusBadge: "GCP CLUSTER // LIVE",
+    slaBadge: "99.98% SLA",
+    accentColor: "#F43F5E",
+    category: "PROPTECH SAAS // NEXT.JS + FASTAPI",
+    title: "UrbanNest Multi-Tenant Property SaaS",
+    description:
+      "End-to-end multi-tenant PG & commercial property management platform. Engineered automated rent lifecycles, real-time room inventory allocation, multi-property analytics, and serverless deployment on Google Cloud Run.",
+    highlights: [
+      { label: "TENANT ISOLATION", val: "DB Partitioned" },
+      { label: "INVENTORY LOCK", val: "ACID Safe" },
+      { label: "P99 API LATENCY", val: "< 38ms" },
+    ],
+    terminalData: {
+      action: "POST /v2/leases/generate-agreement",
+      badge: "201 CREATED (34ms)",
+      log1: "→ Tenant #UN-9281 allocated Room #402 with mutual ACID lock",
+      log2: "→ Cloud Run autoscaled to 4 pods • 240 req/sec sustained throughput",
+    },
+    architecturePillars: [
+      { title: "SCHEMA PARTITIONING", desc: "Strict tenant isolation preventing cross-property data leaks." },
+      { title: "AUTONOMOUS AUTOSCALE", desc: "Google Cloud Run container scaling to zero to minimize idle bill." },
+      { title: "STATE LOCK QUEUE", desc: "Redis mutex locks preventing double-booking of high-demand rooms." },
+    ],
+    techs: ["Next.js", "React", "FastAPI", "Python", "GCP Cloud Run", "MongoDB", "Redis"],
+    badgeColor: "border-rose-500/30 bg-rose-500/20 text-rose-300",
+    gradient: "from-rose-950/50 via-zinc-900 to-black",
+  },
+  {
+    id: "ojas",
+    num: "02",
+    nodeCode: "NODE_02 // ASYNC PIPELINE",
+    statusBadge: "SHOPIFY WEBHOOKS // ACTIVE",
+    slaBadge: "99.99% SLA",
+    accentColor: "#00F0FF",
+    category: "E-COMMERCE AUTOMATION // PYTHON + WEBHOOKS",
+    title: "Ojas — Async WhatsApp Order Pipeline",
+    description:
+      "High-concurrency Shopify application built with FastAPI. Consumes asynchronous merchant webhooks, verifies cryptographic HMAC signatures, and dispatches automated WhatsApp templates for order confirmation, COD recovery, and live delivery updates.",
+    highlights: [
+      { label: "THROUGHPUT", val: "1,200 req/s" },
+      { label: "VERIFICATION", val: "HMAC-SHA256" },
+      { label: "DISPATCH LATENCY", val: "180ms" },
+    ],
+    terminalData: {
+      action: "webhook.receive('shopify.orders/create')",
+      badge: "HMAC VALID [256-bit]",
+      log1: "→ Decoded payload #ORD-8492 • Ingested into Redis worker queue",
+      log2: "→ Dispatched WhatsApp template #ORD_CONFIRMED to customer via Cloud API",
+    },
+    architecturePillars: [
+      { title: "NON-BLOCKING INGEST", desc: "FastAPI async worker consuming webhooks under 15ms response." },
+      { title: "HMAC AUTHENTICITY", desc: "256-bit cryptographic verification rejecting spoofed order events." },
+      { title: "PERSISTENT RETRY", desc: "Redis task queue with exponential backoff on carrier API rate limits." },
+    ],
+    techs: ["FastAPI", "Python", "Shopify API", "WhatsApp Cloud API", "Redis Queue", "Docker"],
+    badgeColor: "border-cyan-500/30 bg-cyan-500/20 text-cyan-300",
+    gradient: "from-cyan-950/50 via-zinc-900 to-black",
+  },
+  {
+    id: "sso",
+    num: "03",
+    nodeCode: "NODE_03 // SECURITY MESH",
+    statusBadge: "IDENTITY CLUSTER // ACTIVE",
+    slaBadge: "ZERO-LEAKAGE",
+    accentColor: "#F59E0B",
+    category: "IDENTITY INFRASTRUCTURE // SSO + FIREBASE",
+    title: "Centralized Ticket-Exchange SSO",
+    description:
+      "Unified Single Sign-On service authenticating users seamlessly across multiple enterprise domains using short-lived cryptographic ticket exchange, preventing session leakage and eliminating cross-site cookie vulnerabilities.",
+    highlights: [
+      { label: "TICKET CRYPTO", val: "HS256 Signed" },
+      { label: "CROSS-DOMAIN", val: "iframe Mesh" },
+      { label: "SESSION TTL", val: "900s Rotating" },
+    ],
+    terminalData: {
+      action: "GET /auth/ticket/exchange?domain=app.losung360.com",
+      badge: "200 AUTH_GRANTED",
+      log1: "→ Auth Hub (losung360.com) exchanged cryptographic nonce",
+      log2: "→ Subdomain authenticated with zero third-party cookie reliance",
+    },
+    architecturePillars: [
+      { title: "TICKET EXCHANGE", desc: "Single-use rotating cryptographically signed nonces with 60s window." },
+      { title: "CROSS-ORIGIN MESH", desc: "Secure window.postMessage frame handshake with origin verification." },
+      { title: "SESSION INTEGRITY", desc: "Firebase auth state synchronized without cross-site cookie tracking." },
+    ],
+    techs: ["FastAPI", "React", "Firebase Auth", "JWT", "Security Hardening", "Docker"],
+    badgeColor: "border-amber-500/30 bg-amber-500/20 text-amber-300",
+    gradient: "from-amber-950/50 via-zinc-900 to-black",
+  },
+  {
+    id: "jarvis",
+    num: "04",
+    nodeCode: "NODE_04 // GAMIFIED OS",
+    statusBadge: "DUAL-CORE HUD // RUNNING",
+    slaBadge: "REAL-TIME SYNC",
+    accentColor: "#10B981",
+    category: "DUAL-CORE SYSTEM // NEXT.JS + MONGODB",
+    title: "Project JARVIS — Dual-Core OS",
+    description:
+      "Full-stack personal command center combining a high-density competitive exam analytics hub with an RPG-gamified calisthenics and strength telemetry engine inspired by Solo Leveling.",
+    highlights: [
+      { label: "ACADEMIC CORE", val: "14 Syllabi Modules" },
+      { label: "BIOMETRIC CORE", val: "XP Progression" },
+      { label: "PB DEADLIFT", val: "200KG DL [CLEARED]" },
+    ],
+    terminalData: {
+      action: "TELEMETRY_ENGINE.sync()",
+      badge: "RANK: S-TIER",
+      log1: "→ Core A: Syllabi revision telemetry active • 98.4% mock accuracy",
+      log2: "→ Core B: Daily quest cleared • Squat: 180kg • Deadlift: 200kg verified",
+    },
+    architecturePillars: [
+      { title: "AGGREGATION ENGINE", desc: "MongoDB aggregation pipelines calculating daily XP curves in real-time." },
+      { title: "DUAL-CORE SEPARATION", desc: "Independent state stores for intellectual vs physical performance." },
+      { title: "CLIENT CACHING", desc: "Optimistic React state updates with zero mutation latency." },
+    ],
+    techs: ["TypeScript", "Next.js", "Tailwind CSS", "MongoDB Aggregations", "Chart.js"],
+    badgeColor: "border-emerald-500/30 bg-emerald-500/20 text-emerald-300",
+    gradient: "from-emerald-950/50 via-zinc-900 to-black",
+  },
+  {
+    id: "fastship",
+    num: "05",
+    nodeCode: "NODE_05 // SHOPIFY EXT",
+    statusBadge: "ADMIN EMBEDDED // LIVE",
+    slaBadge: "1.2s BATCH DISPATCH",
+    accentColor: "#00F0FF",
+    category: "LOGISTICS INFRA // SHOPIFY ADMIN UI",
+    title: "FastShip Multi-Carrier Logistics",
+    description:
+      "Native Shopify Admin UI extension enabling merchants to compare courier rates, generate bulk AWBs, and orchestrate multi-carrier fulfillment directly inside the Shopify Admin panel without third-party redirection.",
+    highlights: [
+      { label: "CARRIERS", val: "Delhivery • FedEx • Bluedart" },
+      { label: "AWB ENGINE", val: "120/batch" },
+      { label: "RATE SORT", val: "Real-Time Parallel" },
+    ],
+    terminalData: {
+      action: "GRAPHQL /admin/api/fulfillment/batch-dispatch",
+      badge: "BATCH DISPATCHED",
+      log1: "→ Rates queried in parallel: Delhivery ₹44 • Bluedart ₹58 • FedEx ₹65",
+      log2: "→ Lowest cost carrier chosen • 120 printable AWB labels generated in 1.2s",
+    },
+    architecturePillars: [
+      { title: "NATIVE INTEGRATION", desc: "Zero iframe embeds — built with Shopify Admin UI Extension primitives." },
+      { title: "CARRIER AGGREGATION", desc: "Unified API schema transforming dissimilar carrier webhooks & payloads." },
+      { title: "BULK CONCURRENCY", desc: "Parallel Promise orchestration generating labels without UI thread freeze." },
+    ],
+    techs: ["Shopify Extensions API", "React", "GraphQL", "REST APIs", "Node.js"],
+    badgeColor: "border-teal-500/30 bg-teal-500/20 text-teal-300",
+    gradient: "from-teal-950/50 via-zinc-900 to-black",
+  },
+  {
+    id: "ekyc",
+    num: "06",
+    nodeCode: "NODE_06 // FINTECH API",
+    statusBadge: "DECENTRO VAULT // VERIFIED",
+    slaBadge: "100% DETERMINISTIC",
+    accentColor: "#38BDF8",
+    category: "FINTECH COMPLIANCE // PYTHON BACKEND",
+    title: "Decentro eKYC & DigiLocker Pipeline",
+    description:
+      "Zero-friction identity and financial onboarding module integrating Decentro Public Registry, PAN verification, penny-drop bank validation, and DigiLocker APIs with resilient retry queues and data encryption at rest.",
+    highlights: [
+      { label: "REGISTRY CHECK", val: "PAN NSDL Match" },
+      { label: "BANK VALIDATION", val: "Penny-Drop IFSC" },
+      { label: "CONSENT VAULT", val: "DigiLocker OAuth2" },
+    ],
+    terminalData: {
+      action: "POST /v1/compliance/verify-identity",
+      badge: "IDENTITY VERIFIED",
+      log1: "→ NSDL PAN record matched name & DOB • Penny drop confirmed bank IFSC",
+      log2: "→ Issued OAuth2 consent token • Sensitive PII encrypted via AES-256 at rest",
+    },
+    architecturePillars: [
+      { title: "PUBLIC REGISTRY MESH", desc: "Decentro API pipeline with deterministic verification fallbacks." },
+      { title: "PII VAULTING", desc: "Field-level AES-256 encryption ensuring compliance with data privacy acts." },
+      { title: "IDEMPOTENT RETRY", desc: "Guaranteed exactly-once execution on bank network timeout events." },
+    ],
+    techs: ["Python", "FastAPI", "AsyncIO", "Public Registry", "DigiLocker API", "AES-256"],
+    badgeColor: "border-sky-500/30 bg-sky-500/20 text-sky-300",
+    gradient: "from-sky-950/50 via-zinc-900 to-black",
+  },
+  {
+    id: "askamar",
+    num: "07",
+    nodeCode: "NODE_07 // LLM AGENT",
+    statusBadge: "PINECONE + GEMINI // ACTIVE",
+    slaBadge: "128ms VECTOR RETRIEVAL",
+    accentColor: "#A855F7",
+    category: "INTELLIGENT AI AGENT // LLM + PINECONE",
+    title: "AskAmar AI Conversational System",
+    description:
+      "Intelligent agent powered by vector embeddings and semantic search that provides personalized, precise answers regarding system architecture, technical leadership, and past engineering milestones.",
+    highlights: [
+      { label: "VECTOR DIMS", val: "1,536 Dimensional" },
+      { label: "COSINE SIMILARITY", val: "0.941 Top Match" },
+      { label: "STREAM SPEED", val: "42 tokens/sec" },
+    ],
+    terminalData: {
+      action: "agent.query('Explain FastAPI webhook retry architecture')",
+      badge: "SEMANTIC HIT (0.94)",
+      log1: "→ Retrieved top 3 chunk embeddings from Pinecone index [amarjit-arch]",
+      log2: "→ Injected into Gemini 1.5 system prompt • Streaming token response at 42 tok/s",
+    },
+    architecturePillars: [
+      { title: "SEMANTIC CHUNKING", desc: "Markdown AST chunking preserving contextual code block integrity." },
+      { title: "VECTOR RETRIEVAL", desc: "Sub-130ms similarity querying with metadata filtering in Pinecone DB." },
+      { title: "CONTEXT GUARDRAILS", desc: "Hardened system prompts preventing hallucination and prompt injection." },
+    ],
+    techs: ["Next.js", "MongoDB", "Pinecone Vector DB", "LangChain", "Gemini API", "TypeScript"],
+    badgeColor: "border-purple-500/30 bg-purple-500/20 text-purple-300",
+    gradient: "from-purple-950/50 via-zinc-900 to-black",
+  },
+  {
+    id: "stockscope",
+    num: "08",
+    nodeCode: "NODE_08 // TELEMETRY",
+    statusBadge: "WEBSOCKET STREAM // LIVE",
+    slaBadge: "60FPS ZERO-JANK D3",
+    accentColor: "#EAB308",
+    category: "FINANCIAL TELEMETRY // REAL-TIME D3.JS",
+    title: "StockScope Real-Time Market Telemetry",
+    description:
+      "High-frame-rate financial dashboard visualizing real-time equities, momentum indicators, and order-book depth powered by reactive state pipelines and D3.js visual charts.",
+    highlights: [
+      { label: "TICK FEED", val: "Sub-50ms WebSocket" },
+      { label: "VISUALIZER", val: "Reactive D3.js" },
+      { label: "STATE BUFFER", val: "Circular Ring Memory" },
+    ],
+    terminalData: {
+      action: "WSS /market/depth/order-book?symbol=NIFTY50",
+      badge: "STREAMING (60 FPS)",
+      log1: "→ Best Bid: ₹24,850.20 (4,200 qty) • Best Ask: ₹24,850.80 (3,800 qty)",
+      log2: "→ D3 canvas rendered order book depth curve without memory garbage collection lag",
+    },
+    architecturePillars: [
+      { title: "WEBSOCKET STREAMING", desc: "Low-overhead binary tick parser operating over persistent sockets." },
+      { title: "CIRCULAR BUFFERING", desc: "Fixed-size rolling array preventing browser garbage collection pauses." },
+      { title: "CANVAS ACCELERATION", desc: "Hybrid SVG + HTML5 Canvas rendering for high tick density periods." },
+    ],
+    techs: ["React", "D3.js", "JavaScript", "WebSockets", "Data Pipelines", "Tailwind CSS"],
+    badgeColor: "border-yellow-500/30 bg-yellow-500/20 text-yellow-300",
+    gradient: "from-yellow-950/50 via-zinc-900 to-black",
+  },
+];
+
+export const WORK_EXPERIENCES = [
+  {
+    company: "Dpanda",
+    role: "Tech Lead",
+    period: "Jan 2024 - Present",
+    location: "Gurugram / Hybrid",
+    color: "#64ffda",
+    badge: "CURRENT ROLE",
+    projects: [
+      {
+        title: "Microsite Optimization & High-Scale Customization Engine",
+        points: [
+          "Engineered advanced performance optimization strategies, achieving a 45% reduction in page load times, which led to a 10% increase in user engagement.",
+          "Developed reusable and customizable components, enabling microsite themes to be tailored instantly to different publisher applications.",
+          "Spearheaded and mentored a high-performing team of 4 developers, driving architectural standards, code quality, and exceptional user experiences.",
+        ],
+      },
+      {
+        title: "Real-Time Notification Manager & Traffic Monitor",
+        points: [
+          "Designed an end-to-end notification management system using Socket.IO, Node.js, Express.js, and AWS EC2.",
+          "Built a real-time operations dashboard for targeted notifications and live traffic monitoring.",
+          "Enabled sub-100ms analytics pipeline latency, enhancing operational visibility under peak traffic loads.",
+        ],
+      },
+    ],
+  },
+  {
+    company: "Borderfree",
+    role: "Software Developer",
+    period: "Oct 2021 - Jan 2024",
+    location: "New Delhi",
+    color: "#818cf8",
+    badge: "2 YRS 4 MOS",
+    projects: [
+      {
+        title: "Cross-Platform Checkout & Promotion Engine",
+        points: [
+          "Architected a robust checkout integration facilitating secure, seamless transactions across multiple stores.",
+          "Implemented dynamic discount strategies and promotion engines, driving a 35% increase in customer engagement.",
+          "Boosted merchant sales revenue by 20% through data-driven promotional campaigns and optimized conversion funnels.",
+        ],
+      },
+      {
+        title: "Revo Shopify Merchant Integration",
+        points: [
+          "Developed OAuth 2.0-based authentication and synchronization pipeline supporting 1,000+ live merchant connections.",
+          "Automated merchant store setup, reducing client onboarding time from 2 hours to 5 minutes.",
+          "Achieved 98% positive merchant feedback and reduced tier-1 support tickets by 60%.",
+        ],
+      },
+    ],
+  },
+];
+
+export const TELEMETRY_STATS = [
+  { value: 45, suffix: "%", label: "Page Load Reduction", subtext: "Via bundle splitting & caching", color: "#00F0FF" },
+  { value: 35, suffix: "%", label: "Engagement Boost", subtext: "Through responsive UX & promos", color: "#10B981" },
+  { value: 1000, suffix: "+", label: "Merchant Connections", subtext: "Automated OAuth 2.0 pipelines", color: "#F59E0B" },
+  { value: 4, suffix: "+ Yrs", label: "Production Leadership", subtext: "Full-stack & distributed backends", color: "#F43F5E" },
+];
+
+export const CERTIFICATES = [
+  {
+    id: 1,
+    title: "Data Science & Analytics",
+    issuer: "UpGrad Campus",
+    date: "May 2023",
+    imageUrl: "/assets/DS.png",
+    category: "Certification",
+    verifyUrl: "#",
+  },
+  {
+    id: 2,
+    title: "Top Reader Year 2024",
+    issuer: "Daily.dev",
+    date: "December 2024",
+    imageUrl: "/assets/reader.png",
+    category: "Achievement",
+    verifyUrl: "#",
+  },
+];
+
+export const TECH_MATRIX = [
+  { category: "Backends & APIs", items: ["Python", "FastAPI", "Flask", "Node.js", "Express.js", "REST", "GraphQL", "Socket.IO"] },
+  { category: "Frontends & UI", items: ["Next.js", "React", "TypeScript", "Tailwind CSS", "JavaScript (ES6+)", "D3.js", "HTML5/CSS3"] },
+  { category: "Cloud & DevOps", items: ["Google Cloud Platform", "GCP Cloud Run", "Docker", "AWS EC2", "Nginx", "Gunicorn", "systemd", "CI/CD"] },
+  { category: "Databases & Storage", items: ["MongoDB", "PostgreSQL", "Redis", "Pinecone Vector DB", "Firebase Firestore"] },
+  { category: "E-Commerce & FinTech", items: ["Shopify Admin Extensions", "Shopify Webhooks", "WhatsApp Cloud API", "Decentro eKYC", "DigiLocker"] },
+];
+
+export const HOBBIES = [
+  { name: "200KG Deadlift", icon: "🏋️", tag: "Physical Discipline" },
+  { name: "MMA & Striking", icon: "🥊", tag: "Combat Focus" },
+  { name: "Endurance Running", icon: "🏃", tag: "4:05/km Pace" },
+  { name: "Engineering Puzzles", icon: "🧩", tag: "Algorithmic Thinking" },
+  { name: "Tech Architecture Reading", icon: "📚", tag: "Daily.dev Top 1%" },
+  { name: "Trekking & Outdoors", icon: "🏔️", tag: "High-Altitude Focus" },
+];
