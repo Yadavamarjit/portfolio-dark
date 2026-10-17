@@ -422,7 +422,7 @@ export default function HeroNodeGraph({ onSelectSystem, onOpenContact }) {
       id="hero"
       data-hud-label="SYSTEMS"
       ref={containerRef}
-      className="relative w-full min-h-[100dvh] h-auto py-20 sm:py-0 sm:h-screen sm:min-h-[760px] overflow-x-hidden bg-[#060606] bg-dot-grid flex items-center justify-center border-b border-hairline select-none"
+      className="relative w-full min-h-[100dvh] h-auto py-16 sm:py-0 sm:h-screen sm:min-h-[760px] overflow-hidden bg-[#060606] bg-dot-grid flex flex-col items-center justify-center border-b border-hairline select-none box-border"
     >
       {/* Background Concentric Orbital Rings & Traveling Neon Energy Beams */}
       <svg className="absolute inset-0 w-full h-full pointer-events-none z-0">
@@ -603,10 +603,10 @@ export default function HeroNodeGraph({ onSelectSystem, onOpenContact }) {
       */}
       <div
         id="hero-center"
-        className="relative z-30 text-center max-w-4xl px-4 py-4 mx-auto pointer-events-auto"
+        className="relative z-30 text-center w-full max-w-4xl min-w-0 pl-4 pr-6 sm:px-6 py-4 mx-auto pointer-events-auto box-border"
       >
         <div
-          className="inline-flex items-center space-x-2 font-mono text-[10px] sm:text-xs tracking-[0.24em] text-neonCyan uppercase mb-3 transition-opacity duration-300"
+          className="inline-flex items-center space-x-2 font-mono text-[9.5px] sm:text-xs tracking-[0.16em] sm:tracking-[0.24em] text-neonCyan uppercase mb-2.5 sm:mb-3 transition-opacity duration-300"
           style={{ opacity: isMobile ? 1 : Math.max(0, 1 - scrollProgress * 1.8) }}
         >
           <span>[ FULL-STACK &amp; BACKEND TECH LEAD ]</span>
@@ -615,7 +615,7 @@ export default function HeroNodeGraph({ onSelectSystem, onOpenContact }) {
         {/* Display Title AMARJIT — Splitting character-by-character on scroll */}
         <h1
           id="kinetic-title"
-          className="font-display font-extrabold text-4xl xs:text-5xl sm:text-7xl md:text-8xl lg:text-9xl tracking-tight text-white leading-none select-none drop-shadow-[0_15px_40px_rgba(255,255,255,0.2)] flex justify-center space-x-1 sm:space-x-3 overflow-visible"
+          className="font-display font-extrabold text-4xl sm:text-7xl md:text-8xl lg:text-9xl tracking-tight text-white leading-none select-none drop-shadow-[0_15px_40px_rgba(255,255,255,0.2)] flex justify-center space-x-1 sm:space-x-3 overflow-visible"
         >
           {TITLE_LETTERS.map((item, idx) => (
             <span
@@ -633,33 +633,33 @@ export default function HeroNodeGraph({ onSelectSystem, onOpenContact }) {
           className="transition-opacity duration-300"
           style={{ opacity: isMobile ? 1 : Math.max(0, 1 - scrollProgress * 1.8) }}
         >
-          <p className="mt-3 sm:mt-4 text-lg sm:text-2xl md:text-3xl text-zinc-100 font-light drop-shadow-md px-2">
-            Resilient <span className="font-serif italic text-white text-xl sm:text-3xl md:text-4xl">systems</span> for high-scale products.
+          <p className="mt-3 sm:mt-4 text-base sm:text-2xl md:text-3xl text-zinc-100 font-light drop-shadow-md px-1 sm:px-2">
+            Resilient <span className="font-serif italic text-white text-lg sm:text-3xl md:text-4xl">systems</span> for high-scale products.
           </p>
 
-          <p className="mt-2.5 sm:mt-3 text-xs sm:text-sm text-zinc-400 max-w-xl mx-auto leading-relaxed drop-shadow px-3">
+          <p className="mt-2.5 sm:mt-3 text-xs sm:text-sm text-zinc-400 max-w-lg sm:max-w-xl mx-auto leading-relaxed drop-shadow px-1 sm:px-3 break-words">
             {DEVELOPER_PROFILE.name} architects distributed Python/FastAPI backends, Next.js frontends, and automated cloud infrastructure with uncompromising control.
           </p>
 
           {/* Dual Sharp Brutalist Buttons */}
-          <div className="mt-5 sm:mt-7 flex flex-col sm:flex-row items-center justify-center gap-2.5 sm:gap-3 w-full max-w-xs sm:max-w-none mx-auto px-4 sm:px-0">
+          <div className="mt-4 sm:mt-7 flex flex-col sm:flex-row items-center justify-center gap-2.5 sm:gap-3 w-full max-w-[280px] sm:max-w-none mx-auto px-1 sm:px-0">
             <a
               href="#systems"
-              className="w-full sm:w-auto text-center justify-center bg-white text-black font-mono text-xs font-semibold tracking-[0.14em] px-6 py-3 rounded hover:bg-neonCyan transition-all flex items-center space-x-2 shadow-[0_10px_25px_rgba(255,255,255,0.15)] cursor-pointer"
+              className="w-full sm:w-auto text-center justify-center bg-white text-black font-mono text-xs font-semibold tracking-[0.14em] px-6 py-2.5 sm:py-3 rounded hover:bg-neonCyan transition-all flex items-center space-x-2 shadow-[0_10px_25px_rgba(255,255,255,0.15)] cursor-pointer"
             >
               <span>EXPLORE SYSTEMS</span>
               <span>↓</span>
             </a>
             <button
               onClick={onOpenContact}
-              className="w-full sm:w-auto text-center justify-center border border-white/25 bg-black/40 text-white font-mono text-xs tracking-[0.14em] px-6 py-3 rounded hover:border-white hover:bg-white/10 transition-all cursor-pointer backdrop-blur-sm"
+              className="w-full sm:w-auto text-center justify-center border border-white/25 bg-black/40 text-white font-mono text-xs tracking-[0.14em] px-6 py-2.5 sm:py-3 rounded hover:border-white hover:bg-white/10 transition-all cursor-pointer backdrop-blur-sm"
             >
               ARCHITECTURAL SPECS
             </button>
           </div>
 
-          {/* Monospace Technical Stack Bar (Image 2 Exact Line) */}
-          <div className="mt-5 sm:mt-6 pt-1 sm:pt-2 font-mono text-[9px] sm:text-[11px] tracking-[0.18em] sm:tracking-[0.20em] text-zinc-500 uppercase flex items-center justify-center gap-2 sm:gap-3 whitespace-nowrap overflow-x-auto no-scrollbar max-w-full px-2">
+          {/* Monospace Technical Stack Bar */}
+          <div className="mt-4 sm:mt-6 pt-1 sm:pt-2 font-mono text-[9px] sm:text-[11px] tracking-[0.14em] sm:tracking-[0.20em] text-zinc-500 uppercase flex flex-wrap items-center justify-center gap-x-2 gap-y-1 sm:gap-3 max-w-full px-2 min-w-0">
             <span>PYTHON</span>
             <span>•</span>
             <span>FASTAPI</span>
@@ -676,8 +676,8 @@ export default function HeroNodeGraph({ onSelectSystem, onOpenContact }) {
           </div>
 
           {/* Mobile Swipeable Deck of System Nodes (< 768px) */}
-          <div className="md:hidden mt-6 w-full max-w-md mx-auto px-2">
-            <div className="flex items-center justify-between px-2 mb-2 text-zinc-500 font-mono text-[9px] uppercase tracking-wider">
+          <div className="md:hidden mt-5 sm:mt-6 w-full max-w-md mx-auto px-1 min-w-0">
+            <div className="flex items-center justify-between px-1 mb-2 text-zinc-500 font-mono text-[9px] uppercase tracking-wider">
               <span className="flex items-center gap-1.5">
                 <span className="w-1.5 h-1.5 rounded-full bg-neonCyan animate-pulse" />
                 SYSTEM NODES ({HERO_NODES.length})
@@ -686,11 +686,11 @@ export default function HeroNodeGraph({ onSelectSystem, onOpenContact }) {
                 SWIPE <span>→</span>
               </span>
             </div>
-            <div className="flex overflow-x-auto gap-3 py-2 px-1 no-scrollbar snap-x snap-mandatory touch-pan-x overscroll-x-contain pointer-events-auto w-full">
+            <div className="flex overflow-x-auto gap-3 py-2 px-1 no-scrollbar snap-x snap-mandatory touch-pan-x overscroll-x-contain pointer-events-auto w-full min-w-0">
               {HERO_NODES.map((node) => (
                 <div
                   key={`mobile-node-${node.id}`}
-                  className="snap-start shrink-0 w-[265px] h-[135px] active:scale-[0.98] transition-transform"
+                  className="snap-start shrink-0 w-[240px] xs:w-[260px] h-[132px] active:scale-[0.98] transition-transform"
                 >
                   {renderCardContent(node, false)}
                 </div>

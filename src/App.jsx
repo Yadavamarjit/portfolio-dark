@@ -51,7 +51,7 @@ export default function App() {
       {/* Main Layout Container (Left Content Viewport + Right Elevator HUD) */}
       <div className="relative flex min-h-screen pt-14">
         {/* Left / Main Scrollable Content — 100% Full-Width (Zero Extra Space) */}
-        <main className="w-full relative">
+        <main className="w-full min-w-0 relative overflow-x-clip">
           <HeroNodeGraph
             onSelectSystem={handleSelectSystem}
             onOpenContact={() => setIsContactOpen(true)}

@@ -41,22 +41,59 @@ body {
   background-size: 28px 28px;
 }
 
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-  width: 5px;
+/* Custom Scrollbar - Desktop only */
+@media (min-width: 1025px) {
+  ::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: #060606;
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: #27272A;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: #52525B;
+  }
 }
 
-::-webkit-scrollbar-track {
-  background: #060606;
+/* On mobile / touch devices (< 1024px), completely hide the default browser scrollbars
+   so they don't overlap with the right-edge Elevator Caliper HUD */
+@media (max-width: 1024px) {
+  html,
+  body,
+  #root,
+  main {
+    scrollbar-width: none !important;
+    -ms-overflow-style: none !important;
+  }
+
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar,
+  #root::-webkit-scrollbar,
+  main::-webkit-scrollbar,
+  *::-webkit-scrollbar {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+  }
 }
 
-::-webkit-scrollbar-thumb {
-  background: #27272A;
+/* Universal utility to hide scrollbars on horizontal scroll decks */
+.no-scrollbar::-webkit-scrollbar {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
 }
 
-::-webkit-scrollbar-thumb:hover {
-  background: #52525B;
+.no-scrollbar {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
 }
+
 
 /* Orbital Card Base Styling with Curved Organic Bezel */
 .orbit-card {
