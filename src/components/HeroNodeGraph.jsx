@@ -32,6 +32,24 @@ const ANCHOR_OFFSETS = [
   { dx: 410, dy: 270, floatSpeed: 1.05, floatAmp: 6 },
 ];
 
+// 14 Radiant Celestial Stardust Dots: Randomly moving, glowing, organic shimmer & smooth color shift
+const CELESTIAL_DOTS = [
+  { id: 1, x: '14%', y: '20%', size: 3.2, driftAnim: 'celestialDrift1', driftDur: '18s', driftDelay: '-2s', shimmerAnim: 'starShimmerA', shimmerDur: '4.8s', shimmerDelay: '0.4s', colorAnim: 'dotColorCycle1', colorDur: '14s' },
+  { id: 2, x: '82%', y: '16%', size: 3.4, driftAnim: 'celestialDrift2', driftDur: '22s', driftDelay: '-7s', shimmerAnim: 'starShimmerB', shimmerDur: '6.2s', shimmerDelay: '1.2s', colorAnim: 'dotColorCycle2', colorDur: '18s' },
+  { id: 3, x: '11%', y: '62%', size: 3.0, driftAnim: 'celestialDrift3', driftDur: '19s', driftDelay: '-11s', shimmerAnim: 'starShimmerC', shimmerDur: '5.4s', shimmerDelay: '2.1s', colorAnim: 'dotColorCycle3', colorDur: '16s' },
+  { id: 4, x: '88%', y: '68%', size: 3.2, driftAnim: 'celestialDrift4', driftDur: '24s', driftDelay: '-4s', shimmerAnim: 'starShimmerA', shimmerDur: '5.9s', shimmerDelay: '0.8s', colorAnim: 'dotColorCycle1', colorDur: '15s' },
+  { id: 5, x: '24%', y: '84%', size: 3.0, driftAnim: 'celestialDrift2', driftDur: '20s', driftDelay: '-13s', shimmerAnim: 'starShimmerB', shimmerDur: '4.6s', shimmerDelay: '1.9s', colorAnim: 'dotColorCycle2', colorDur: '20s' },
+  { id: 6, x: '76%', y: '82%', size: 3.4, driftAnim: 'celestialDrift1', driftDur: '23s', driftDelay: '-9s', shimmerAnim: 'starShimmerC', shimmerDur: '6.7s', shimmerDelay: '3.1s', colorAnim: 'dotColorCycle3', colorDur: '17s' },
+  { id: 7, x: '32%', y: '12%', size: 2.8, driftAnim: 'celestialDrift4', driftDur: '17s', driftDelay: '-6s', shimmerAnim: 'starShimmerA', shimmerDur: '5.1s', shimmerDelay: '1.5s', colorAnim: 'dotColorCycle1', colorDur: '13s' },
+  { id: 8, x: '68%', y: '24%', size: 3.2, driftAnim: 'celestialDrift3', driftDur: '25s', driftDelay: '-14s', shimmerAnim: 'starShimmerB', shimmerDur: '6.0s', shimmerDelay: '0.2s', colorAnim: 'dotColorCycle2', colorDur: '19s' },
+  { id: 9, x: '7%', y: '40%', size: 3.0, driftAnim: 'celestialDrift1', driftDur: '21s', driftDelay: '-15s', shimmerAnim: 'starShimmerC', shimmerDur: '5.7s', shimmerDelay: '2.8s', colorAnim: 'dotColorCycle3', colorDur: '15s' },
+  { id: 10, x: '93%', y: '36%', size: 3.2, driftAnim: 'celestialDrift2', driftDur: '19s', driftDelay: '-8s', shimmerAnim: 'starShimmerA', shimmerDur: '4.9s', shimmerDelay: '1.0s', colorAnim: 'dotColorCycle1', colorDur: '21s' },
+  { id: 11, x: '44%', y: '90%', size: 2.8, driftAnim: 'celestialDrift3', driftDur: '26s', driftDelay: '-16s', shimmerAnim: 'starShimmerB', shimmerDur: '6.4s', shimmerDelay: '2.4s', colorAnim: 'dotColorCycle2', colorDur: '16s' },
+  { id: 12, x: '58%', y: '8%', size: 3.2, driftAnim: 'celestialDrift4', driftDur: '21s', driftDelay: '-3s', shimmerAnim: 'starShimmerC', shimmerDur: '5.3s', shimmerDelay: '0.6s', colorAnim: 'dotColorCycle3', colorDur: '18s' },
+  { id: 13, x: '20%', y: '48%', size: 2.8, driftAnim: 'celestialDrift2', driftDur: '23s', driftDelay: '-10s', shimmerAnim: 'starShimmerA', shimmerDur: '5.5s', shimmerDelay: '1.7s', colorAnim: 'dotColorCycle1', colorDur: '17s' },
+  { id: 14, x: '84%', y: '50%', size: 3.0, driftAnim: 'celestialDrift4', driftDur: '22s', driftDelay: '-5s', shimmerAnim: 'starShimmerB', shimmerDur: '6.1s', shimmerDelay: '2.9s', colorAnim: 'dotColorCycle2', colorDur: '19s' },
+];
+
 export default function HeroNodeGraph({ onSelectSystem, onOpenContact }) {
   const containerRef = useRef(null);
   const cardElementsRef = useRef([]);
@@ -424,10 +442,57 @@ export default function HeroNodeGraph({ onSelectSystem, onOpenContact }) {
       ref={containerRef}
       className="relative w-full min-h-[100dvh] h-auto py-16 sm:py-0 sm:h-screen sm:min-h-[760px] overflow-hidden bg-[#060606] bg-dot-grid flex flex-col items-center justify-center border-b border-hairline select-none box-border"
     >
-      {/* Background Concentric Orbital Rings & Traveling Neon Energy Beams */}
+      {/* 14 Radiant Celestial Stardust Dots (Decoupled Drift, Organic Shimmer & Color Cycling) */}
+      <div className="absolute inset-0 w-full h-full pointer-events-none z-1 overflow-hidden">
+        {CELESTIAL_DOTS.map((dot) => (
+          <span
+            key={dot.id}
+            className="absolute pointer-events-none will-change-transform"
+            style={{
+              left: dot.x,
+              top: dot.y,
+              animation: `${dot.driftAnim} ${dot.driftDur} ease-in-out infinite`,
+              animationDelay: dot.driftDelay,
+            }}
+          >
+            <span
+              className="block rounded-full will-change-transform"
+              style={{
+                width: `${dot.size}px`,
+                height: `${dot.size}px`,
+                filter: 'blur(0.35px)',
+                animation: `${dot.shimmerAnim} ${dot.shimmerDur} ease-in-out infinite, ${dot.colorAnim} ${dot.colorDur} linear infinite`,
+                animationDelay: `${dot.shimmerDelay}, 0s`,
+              }}
+            />
+          </span>
+        ))}
+      </div>
+
+      {/* ============================================================ */}
+      {/* Radiant Liquid Ambient Light Blob (Slow morph & Color shift) */}
+      {/* ============================================================ */}
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[480px] sm:w-[650px] md:w-[750px] h-[260px] sm:h-[350px] md:h-[380px] pointer-events-none z-0 overflow-visible flex items-center justify-center">
+        {/* Layer 1: Core Liquid Organic Blob in deep jewel tones (avoids high-luminance yellow wash-out) */}
+        <div
+          className="w-full h-full rounded-full animate-liquid-blob will-change-transform"
+          style={{
+            background: 'radial-gradient(circle at center, rgba(124, 58, 237, 0.72) 0%, rgba(99, 102, 241, 0.65) 30%, rgba(217, 70, 239, 0.55) 60%, transparent 85%)',
+          }}
+        />
+        {/* Layer 2: Counter-Rotating Secondary Soft Ambient Liquid Glow */}
+        <div
+          className="absolute w-[88%] h-[88%] rounded-full animate-liquid-blob-counter will-change-transform"
+          style={{
+            background: 'radial-gradient(circle at center, rgba(37, 99, 235, 0.65) 0%, rgba(14, 165, 233, 0.55) 35%, rgba(147, 51, 234, 0.45) 68%, transparent 88%)',
+          }}
+        />
+      </div>
+
+      {/* Background Concentric Orbital Rings & Traveling Neon Energy Beams (Temporarily Commented Out) */}
+      {/*
       <svg className="absolute inset-0 w-full h-full pointer-events-none z-0">
         <defs>
-          {/* Traveling Neon Gradient Beams */}
           <linearGradient id="travel-gradient-cyan" x1="0%" y1="0%" x2="100%" y2="100%">
             <stop offset="0%" stopColor="#FFFFFF" stopOpacity="1" />
             <stop offset="25%" stopColor="#00F0FF" stopOpacity="0.95" />
@@ -457,18 +522,10 @@ export default function HeroNodeGraph({ onSelectSystem, onOpenContact }) {
           </linearGradient>
         </defs>
 
-        {/* 3 Concentric Orbit Rings (Base tracks) */}
         <ellipse cx="50%" cy="50%" rx="540" ry="310" className="orbit-ring-dashed" />
         <ellipse cx="50%" cy="50%" rx="740" ry="430" className="orbit-ring-dashed" />
         <ellipse cx="50%" cy="50%" rx="940" ry="540" className="orbit-ring" />
 
-        {/* 
-          ============================================================
-          TRAVELING NEON ENERGY BEAMS (Comets racing around orbit lines)
-          GPU-Composited Dual-Stroke Bloom + Core Laser (Zero CPU lag)
-          ============================================================
-        */}
-        {/* Track 1: Traveling Neon Cyan Energy Beam */}
         <ellipse
           cx="50%"
           cy="50%"
@@ -493,7 +550,6 @@ export default function HeroNodeGraph({ onSelectSystem, onOpenContact }) {
           style={{ filter: 'drop-shadow(0 0 7px #00F0FF)' }}
         />
 
-        {/* Track 2: Traveling Neon Royal Blue / Violet Energy Beam */}
         <ellipse
           cx="50%"
           cy="50%"
@@ -518,7 +574,6 @@ export default function HeroNodeGraph({ onSelectSystem, onOpenContact }) {
           style={{ filter: 'drop-shadow(0 0 7px #3B82F6)' }}
         />
 
-        {/* Track 3: Traveling Neon Emerald Energy Beam */}
         <ellipse
           cx="50%"
           cy="50%"
@@ -543,7 +598,6 @@ export default function HeroNodeGraph({ onSelectSystem, onOpenContact }) {
           style={{ filter: 'drop-shadow(0 0 8px #10B981)' }}
         />
 
-        {/* Track 3 Secondary: Traveling Rose / Amber Counter-Pulse */}
         <ellipse
           cx="50%"
           cy="50%"
@@ -569,8 +623,10 @@ export default function HeroNodeGraph({ onSelectSystem, onOpenContact }) {
           style={{ animationDuration: '24s', animationDirection: 'reverse', filter: 'drop-shadow(0 0 6px #F43F5E)' }}
         />
       </svg>
+      */}
 
-      {/* Desktop 8 Orbiting Architectural System Cards */}
+      {/* Desktop 8 Orbiting Architectural System Cards (Temporarily Commented Out) */}
+      {/*
       <div className="hidden md:block absolute inset-0 w-full h-full pointer-events-none">
         {HERO_NODES.map((node, i) => {
           const isHovered = hoveredNodeId === node.id;
@@ -596,6 +652,7 @@ export default function HeroNodeGraph({ onSelectSystem, onOpenContact }) {
           );
         })}
       </div>
+      */}
 
       {/* 
         Centerpiece Hero Content (AMARJIT + Resilient Systems + Brutalist CTA)
@@ -606,7 +663,7 @@ export default function HeroNodeGraph({ onSelectSystem, onOpenContact }) {
         className="relative z-30 text-center w-full max-w-4xl min-w-0 pl-4 pr-6 sm:px-6 py-4 mx-auto pointer-events-auto box-border"
       >
         <div
-          className="inline-flex items-center space-x-2 font-mono text-[9.5px] sm:text-xs tracking-[0.16em] sm:tracking-[0.24em] text-neonCyan uppercase mb-2.5 sm:mb-3 transition-opacity duration-300"
+          className="inline-flex items-center space-x-2 font-mono text-[9.5px] sm:text-xs tracking-[0.16em] sm:tracking-[0.24em] text-neonCyan uppercase mb-2.5 sm:mb-3 transition-opacity duration-300 drop-shadow-[0_2px_8px_rgba(0,0,0,0.9)]"
           style={{ opacity: isMobile ? 1 : Math.max(0, 1 - scrollProgress * 1.8) }}
         >
           <span>[ FULL-STACK &amp; BACKEND TECH LEAD ]</span>
@@ -633,11 +690,11 @@ export default function HeroNodeGraph({ onSelectSystem, onOpenContact }) {
           className="transition-opacity duration-300"
           style={{ opacity: isMobile ? 1 : Math.max(0, 1 - scrollProgress * 1.8) }}
         >
-          <p className="mt-3 sm:mt-4 text-base sm:text-2xl md:text-3xl text-zinc-100 font-light drop-shadow-md px-1 sm:px-2">
-            Resilient <span className="font-serif italic text-white text-lg sm:text-3xl md:text-4xl">systems</span> for high-scale products.
+          <p className="mt-3 sm:mt-4 text-base sm:text-2xl md:text-3xl text-zinc-100 font-light drop-shadow-[0_2px_12px_rgba(0,0,0,0.95)] px-1 sm:px-2">
+            Resilient <span className="font-serif italic text-white text-lg sm:text-3xl md:text-4xl drop-shadow-[0_2px_14px_rgba(0,0,0,0.95)]">systems</span> for high-scale products.
           </p>
 
-          <p className="mt-2.5 sm:mt-3 text-xs sm:text-sm text-zinc-400 max-w-lg sm:max-w-xl mx-auto leading-relaxed drop-shadow px-1 sm:px-3 break-words">
+          <p className="mt-2.5 sm:mt-3 text-xs sm:text-sm text-zinc-300 max-w-lg sm:max-w-xl mx-auto leading-relaxed drop-shadow-[0_2px_10px_rgba(0,0,0,0.95)] px-1 sm:px-3 break-words">
             {DEVELOPER_PROFILE.name} architects distributed Python/FastAPI backends, Next.js frontends, and automated cloud infrastructure with uncompromising control.
           </p>
 
@@ -675,7 +732,8 @@ export default function HeroNodeGraph({ onSelectSystem, onOpenContact }) {
             <span>DOCKER</span>
           </div>
 
-          {/* Mobile Swipeable Deck of System Nodes (< 768px) */}
+          {/* Mobile Swipeable Deck of System Nodes (Temporarily Commented Out) */}
+          {/*
           <div className="md:hidden mt-5 sm:mt-6 w-full max-w-md mx-auto px-1 min-w-0">
             <div className="flex items-center justify-between px-1 mb-2 text-zinc-500 font-mono text-[9px] uppercase tracking-wider">
               <span className="flex items-center gap-1.5">
@@ -697,6 +755,7 @@ export default function HeroNodeGraph({ onSelectSystem, onOpenContact }) {
               ))}
             </div>
           </div>
+          */}
         </div>
       </div>
     </section>
