@@ -1,14 +1,24 @@
 import React, { useState } from 'react';
 import { DEVELOPER_PROFILE } from '../data/portfolioData';
+import { trackNavClick } from '../utils/analytics';
 
 export default function Navbar({ onOpenContact }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  const handleNavClick = (name, target) => {
+    trackNavClick(name, target);
+    setMobileMenuOpen(false);
+  };
 
   return (
     <header className="fixed top-0 left-0 right-0 h-14 bg-obsidian/85 backdrop-blur-md border-b border-hairline z-50 flex items-center justify-between px-4 lg:px-6">
       <div className="flex items-center space-x-8">
         {/* Monogram Logo */}
-        <a href="#hero" className="flex items-center space-x-2 group">
+        <a
+          href="#hero"
+          onClick={() => trackNavClick('logo_home', '#hero')}
+          className="flex items-center space-x-2 group"
+        >
           <div className="w-7 h-7 bg-white text-black flex items-center justify-center font-display font-extrabold text-base tracking-tighter group-hover:bg-neonCyan transition-colors">
             A
           </div>
@@ -19,11 +29,11 @@ export default function Navbar({ onOpenContact }) {
 
         {/* Monospace Nav Links */}
         <nav className="hidden md:flex items-center space-x-6 font-mono text-[11px] tracking-[0.14em] text-zinc-400">
-          <a href="#systems" className="hover:text-white transition-colors">PROJECTS</a>
-          <a href="#philosophy" className="hover:text-white transition-colors">ARCHITECTURE</a>
-          <a href="#hero" className="hover:text-white transition-colors">SYSTEMS</a>
-          <a href="#about" className="hover:text-white transition-colors">STACK</a>
-          <a href="#benchmarks" className="hover:text-white transition-colors">LOGS</a>
+          <a href="#systems" onClick={() => trackNavClick('PROJECTS', '#systems')} className="hover:text-white transition-colors">PROJECTS</a>
+          <a href="#philosophy" onClick={() => trackNavClick('ARCHITECTURE', '#philosophy')} className="hover:text-white transition-colors">ARCHITECTURE</a>
+          <a href="#hero" onClick={() => trackNavClick('SYSTEMS', '#hero')} className="hover:text-white transition-colors">SYSTEMS</a>
+          <a href="#about" onClick={() => trackNavClick('STACK', '#about')} className="hover:text-white transition-colors">STACK</a>
+          <a href="#benchmarks" onClick={() => trackNavClick('LOGS', '#benchmarks')} className="hover:text-white transition-colors">LOGS</a>
         </nav>
       </div>
 
@@ -62,19 +72,19 @@ export default function Navbar({ onOpenContact }) {
       {/* Mobile Drawer */}
       {mobileMenuOpen && (
         <div className="md:hidden fixed top-14 left-0 right-0 bg-obsidian border-b border-hairline p-4 flex flex-col space-y-3 font-mono text-xs tracking-wider z-50">
-          <a href="#systems" onClick={() => setMobileMenuOpen(false)} className="py-2 text-zinc-300 hover:text-neonCyan">
+          <a href="#systems" onClick={() => handleNavClick('PROJECTS_mobile', '#systems')} className="py-2 text-zinc-300 hover:text-neonCyan">
             PROJECTS
           </a>
-          <a href="#philosophy" onClick={() => setMobileMenuOpen(false)} className="py-2 text-zinc-300 hover:text-neonCyan">
+          <a href="#philosophy" onClick={() => handleNavClick('ARCHITECTURE_mobile', '#philosophy')} className="py-2 text-zinc-300 hover:text-neonCyan">
             ARCHITECTURE
           </a>
-          <a href="#hero" onClick={() => setMobileMenuOpen(false)} className="py-2 text-zinc-300 hover:text-neonCyan">
+          <a href="#hero" onClick={() => handleNavClick('SYSTEMS_mobile', '#hero')} className="py-2 text-zinc-300 hover:text-neonCyan">
             SYSTEMS
           </a>
-          <a href="#about" onClick={() => setMobileMenuOpen(false)} className="py-2 text-zinc-300 hover:text-neonCyan">
+          <a href="#about" onClick={() => handleNavClick('STACK_mobile', '#about')} className="py-2 text-zinc-300 hover:text-neonCyan">
             STACK
           </a>
-          <a href="#benchmarks" onClick={() => setMobileMenuOpen(false)} className="py-2 text-zinc-300 hover:text-neonCyan">
+          <a href="#benchmarks" onClick={() => handleNavClick('LOGS_mobile', '#benchmarks')} className="py-2 text-zinc-300 hover:text-neonCyan">
             LOGS
           </a>
         </div>

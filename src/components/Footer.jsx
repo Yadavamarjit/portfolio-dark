@@ -1,8 +1,10 @@
 import React from 'react';
 import { DEVELOPER_PROFILE } from '../data/portfolioData';
+import { trackEvent } from '../utils/analytics';
 
 export default function Footer() {
   const scrollToTop = () => {
+    trackEvent('back_to_top_click', { location: 'footer' });
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 

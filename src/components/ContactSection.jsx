@@ -1,5 +1,13 @@
 import React, { useState } from 'react';
 import { DEVELOPER_PROFILE } from '../data/portfolioData';
+import {
+  trackCopyAction,
+  trackOutboundClick,
+  trackSocialClick,
+  trackContactFormSubmit,
+  trackContactFormFocus,
+  trackContactModalClose,
+} from '../utils/analytics';
 
 export default function ContactSection({ isOpen, onClose }) {
   const [copied, setCopied] = useState(false);
@@ -8,18 +16,28 @@ export default function ContactSection({ isOpen, onClose }) {
 
   const handleCopyEmail = () => {
     navigator.clipboard.writeText(DEVELOPER_PROFILE.email);
+    trackCopyAction('email', DEVELOPER_PROFILE.email);
     setCopied(true);
     setTimeout(() => setCopied(false), 2500);
   };
 
   const handleFormSubmit = (e) => {
     e.preventDefault();
+    trackContactFormSubmit('success');
     setFormSent(true);
     setTimeout(() => {
       setFormSent(false);
       setFormData({ name: '', email: '', message: '' });
-      if (onClose) onClose();
+      if (onClose) {
+        trackContactModalClose('post_submission');
+        onClose();
+      }
     }, 2000);
+  };
+
+  const handleCloseModal = (method = 'close_button') => {
+    trackContactModalClose(method);
+    if (onClose) onClose();
   };
 
   return (
@@ -58,6 +76,7 @@ export default function ContactSection({ isOpen, onClose }) {
           <div className="mt-10 flex flex-wrap justify-center gap-4">
             <a
               href={`mailto:${DEVELOPER_PROFILE.email}`}
+              onClick={() => trackOutboundClick(`mailto:${DEVELOPER_PROFILE.email}`, 'mailto')}
               className="bg-white text-black font-mono text-xs font-semibold tracking-[0.15em] px-8 py-4 hover:bg-neonCyan transition-colors flex items-center gap-2"
             >
               <span>DISPATCH EMAIL ↗</span>
@@ -74,6 +93,7 @@ export default function ContactSection({ isOpen, onClose }) {
               href={DEVELOPER_PROFILE.linkedin}
               target="_blank"
               rel="noreferrer"
+              onClick={() => trackSocialClick('linkedin', DEVELOPER_PROFILE.linkedin)}
               className="border border-white/20 text-white font-mono text-xs tracking-[0.15em] px-8 py-4 hover:border-white hover:bg-white/10 transition-colors"
             >
               LINKEDIN PROFILE ↗
@@ -88,10 +108,16 @@ export default function ContactSection({ isOpen, onClose }) {
 
       {/* Quick Message / Initiate Build Modal */}
       {isOpen && (
-        <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-obsidian border border-hairline max-w-lg w-full p-6 sm:p-8 relative shadow-2xl">
+        <div
+          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4"
+          onClick={() => handleCloseModal('backdrop_click')}
+        >
+          <div
+            className="bg-obsidian border border-hairline max-w-lg w-full p-6 sm:p-8 relative shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
             <button
-              onClick={onClose}
+              onClick={() => handleCloseModal('close_button')}
               className="absolute top-4 right-4 text-zinc-400 hover:text-white font-mono text-xs px-2 py-1 border border-hairline cursor-pointer"
             >
               [ ESC / CLOSE ]
@@ -117,6 +143,7 @@ export default function ContactSection({ isOpen, onClose }) {
                     type="text"
                     required
                     value={formData.name}
+                    onFocus={() => trackContactFormFocus('name')}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                     className="w-full bg-zinc-950 border border-hairline px-3 py-2.5 text-white focus:outline-none focus:border-neonCyan"
                     placeholder="e.g. Alex Chen"
@@ -128,6 +155,7 @@ export default function ContactSection({ isOpen, onClose }) {
                     type="email"
                     required
                     value={formData.email}
+                    onFocus={() => trackContactFormFocus('email')}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     className="w-full bg-zinc-950 border border-hairline px-3 py-2.5 text-white focus:outline-none focus:border-neonCyan"
                     placeholder="e.g. alex@company.com"
@@ -139,6 +167,7 @@ export default function ContactSection({ isOpen, onClose }) {
                     rows={4}
                     required
                     value={formData.message}
+                    onFocus={() => trackContactFormFocus('message')}
                     onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                     className="w-full bg-zinc-950 border border-hairline px-3 py-2.5 text-white focus:outline-none focus:border-neonCyan"
                     placeholder="Describe your technical requirements or timeline..."

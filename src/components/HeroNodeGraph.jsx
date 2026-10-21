@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { HERO_NODES, DEVELOPER_PROFILE } from '../data/portfolioData';
+import { trackHeroCTA } from '../utils/analytics';
 
 // Character-by-character horizontal split factors (inspired by ArtCraft Image 2)
 const TITLE_LETTERS = [
@@ -702,6 +703,7 @@ export default function HeroNodeGraph({ onSelectSystem, onOpenContact }) {
           <div className="mt-4 sm:mt-7 flex flex-col sm:flex-row items-center justify-center gap-2.5 sm:gap-3 w-full max-w-[280px] sm:max-w-none mx-auto px-1 sm:px-0">
             <a
               href="#systems"
+              onClick={() => trackHeroCTA('EXPLORE SYSTEMS', 'scroll_to_systems')}
               className="w-full sm:w-auto text-center justify-center bg-white text-black font-mono text-xs font-semibold tracking-[0.14em] px-6 py-2.5 sm:py-3 rounded hover:bg-neonCyan transition-all flex items-center space-x-2 shadow-[0_10px_25px_rgba(255,255,255,0.15)] cursor-pointer"
             >
               <span>EXPLORE SYSTEMS</span>

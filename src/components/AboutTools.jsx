@@ -1,5 +1,6 @@
 import React from 'react';
 import { DEVELOPER_PROFILE, TECH_MATRIX, HOBBIES } from '../data/portfolioData';
+import { trackTechHover } from '../utils/analytics';
 
 export default function AboutTools() {
   return (
@@ -227,6 +228,7 @@ export default function AboutTools() {
                     {grp.items.map((item) => (
                       <span
                         key={item}
+                        onMouseEnter={() => trackTechHover(item, grp.category)}
                         className="px-3 py-1 font-mono text-xs bg-zinc-950 border border-hairline text-zinc-300 hover:border-white/40 hover:text-white transition-all cursor-default"
                       >
                         {item}

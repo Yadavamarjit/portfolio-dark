@@ -1,11 +1,21 @@
 import React, { useState } from 'react';
 import { SHIPPED_SYSTEMS } from '../data/portfolioData';
+import { trackSystemSelect, trackSystemModalClose } from '../utils/analytics';
 
 export default function SystemsBento({ selectedSystemId, onSelectSystem }) {
   const [modalSystem, setModalSystem] = useState(null);
 
   const handleOpenDetail = (system) => {
+    trackSystemSelect(system.id, system.title, 'bento_card');
     setModalSystem(system);
+    if (onSelectSystem) onSelectSystem(system.id);
+  };
+
+  const handleCloseDetail = () => {
+    if (modalSystem) {
+      trackSystemModalClose(modalSystem.id);
+    }
+    setModalSystem(null);
   };
 
   return (
@@ -219,7 +229,7 @@ export default function SystemsBento({ selectedSystemId, onSelectSystem }) {
       {modalSystem && (
         <div
           className="fixed inset-0 z-50 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 sm:p-6"
-          onClick={() => setModalSystem(null)}
+          onClick={handleCloseDetail}
         >
           <div
             className="bg-[#0b0b12] border border-white/20 max-w-3xl w-full p-6 sm:p-8 relative max-h-[90vh] overflow-y-auto shadow-2xl rounded-xl"
@@ -232,7 +242,7 @@ export default function SystemsBento({ selectedSystemId, onSelectSystem }) {
             />
 
             <button
-              onClick={() => setModalSystem(null)}
+              onClick={handleCloseDetail}
               className="absolute top-5 right-5 text-zinc-400 hover:text-white font-mono text-xs px-2.5 py-1 rounded bg-white/5 border border-white/10 hover:border-white cursor-pointer transition-all"
             >
               [ ESC / CLOSE ]
@@ -327,7 +337,7 @@ export default function SystemsBento({ selectedSystemId, onSelectSystem }) {
             {/* Footer */}
             <div className="mt-6 pt-4 border-t border-white/10 flex justify-end gap-3 font-mono text-xs">
               <button
-                onClick={() => setModalSystem(null)}
+                onClick={handleCloseDetail}
                 className="px-5 py-2.5 bg-white text-black font-semibold rounded hover:bg-neonCyan transition-colors cursor-pointer"
               >
                 RETURN TO SYSTEM ARCHITECTURES

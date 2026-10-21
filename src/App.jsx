@@ -10,12 +10,16 @@ import AboutTools from './components/AboutTools';
 import ContactSection from './components/ContactSection';
 import ElevatorHUD from './components/ElevatorHUD';
 import Footer from './components/Footer';
+import { useAnalyticsTracker } from './hooks/useAnalyticsTracker';
+import { trackContactModalOpen, trackNodeGraphClick } from './utils/analytics';
 
 export default function App() {
+  useAnalyticsTracker();
   const [isContactOpen, setIsContactOpen] = useState(false);
   const [selectedSystemId, setSelectedSystemId] = useState(null);
 
   const handleSelectSystem = (nodeId) => {
+    trackNodeGraphClick(nodeId);
     // Map node id to system id
     const systemMap = {
       'node-ojas': 'ojas',
@@ -43,10 +47,15 @@ export default function App() {
     }
   };
 
+  const handleOpenContact = (source = 'direct') => {
+    trackContactModalOpen(source);
+    setIsContactOpen(true);
+  };
+
   return (
     <div className="bg-[#060606] text-[#F4F4F5] min-h-screen selection:bg-white selection:text-black">
       {/* Top Fixed Navbar */}
-      <Navbar onOpenContact={() => setIsContactOpen(true)} />
+      <Navbar onOpenContact={() => handleOpenContact('navbar')} />
 
       {/* Main Layout Container (Left Content Viewport + Right Elevator HUD) */}
       <div className="relative flex min-h-screen pt-14">
@@ -54,7 +63,7 @@ export default function App() {
         <main className="w-full min-w-0 relative overflow-x-clip">
           <HeroNodeGraph
             onSelectSystem={handleSelectSystem}
-            onOpenContact={() => setIsContactOpen(true)}
+            onOpenContact={() => handleOpenContact('hero_cta')}
           />
 
           <CapabilityTicker />

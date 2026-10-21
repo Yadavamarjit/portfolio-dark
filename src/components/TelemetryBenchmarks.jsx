@@ -1,8 +1,19 @@
 import React, { useState } from 'react';
 import { TELEMETRY_STATS, CERTIFICATES } from '../data/portfolioData';
+import { trackCertificateModal, trackEvent } from '../utils/analytics';
 
 export default function TelemetryBenchmarks() {
   const [activeCert, setActiveCert] = useState(null);
+
+  const handleOpenCert = (cert) => {
+    trackCertificateModal(cert.title, cert.issuer);
+    setActiveCert(cert);
+  };
+
+  const handleCloseCert = () => {
+    trackEvent('certificate_modal_close');
+    setActiveCert(null);
+  };
 
   const proofCards = [
     {
@@ -146,7 +157,7 @@ export default function TelemetryBenchmarks() {
               <span className="text-zinc-500">TELEMETRY ARCHIVE</span>
               {card.tag === 'M3' ? (
                 <button
-                  onClick={() => setActiveCert(CERTIFICATES[0])}
+                  onClick={() => handleOpenCert(CERTIFICATES[0])}
                   className="text-neonCyan hover:underline cursor-pointer"
                 >
                   VIEW CERTIFICATES ↗
@@ -161,10 +172,16 @@ export default function TelemetryBenchmarks() {
 
       {/* Certificate Lightbox Modal */}
       {activeCert && (
-        <div className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4">
-          <div className="bg-obsidian border border-hairline max-w-2xl w-full p-6 relative shadow-2xl">
+        <div
+          className="fixed inset-0 z-50 bg-black/90 backdrop-blur-md flex items-center justify-center p-4"
+          onClick={handleCloseCert}
+        >
+          <div
+            className="bg-obsidian border border-hairline max-w-2xl w-full p-6 relative shadow-2xl"
+            onClick={(e) => e.stopPropagation()}
+          >
             <button
-              onClick={() => setActiveCert(null)}
+              onClick={handleCloseCert}
               className="absolute top-4 right-4 text-zinc-400 hover:text-white font-mono text-xs px-2 py-1 border border-hairline cursor-pointer"
             >
               [ ESC / CLOSE ]
@@ -187,7 +204,7 @@ export default function TelemetryBenchmarks() {
                 {CERTIFICATES.map((c) => (
                   <button
                     key={c.id}
-                    onClick={() => setActiveCert(c)}
+                    onClick={() => handleOpenCert(c)}
                     className={`px-3 py-1 border text-xs cursor-pointer ${
                       activeCert.id === c.id ? 'border-neonCyan text-white bg-white/10' : 'border-hairline text-zinc-400'
                     }`}
@@ -197,7 +214,7 @@ export default function TelemetryBenchmarks() {
                 ))}
               </div>
               <button
-                onClick={() => setActiveCert(null)}
+                onClick={handleCloseCert}
                 className="px-4 py-2 bg-white text-black font-semibold hover:bg-neonCyan transition-colors cursor-pointer"
               >
                 CLOSE

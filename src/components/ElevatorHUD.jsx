@@ -1,4 +1,5 @@
 import React, { useEffect, useState, useRef } from 'react';
+import { trackElevatorJump } from '../utils/analytics';
 
 const SECTIONS = [
   { id: 'systems', num: '01', label: 'SYSTEMS' },
@@ -176,6 +177,8 @@ export default function ElevatorHUD() {
   };
 
   const scrollToSection = (id) => {
+    const secObj = SECTIONS.find((s) => s.id === id);
+    trackElevatorJump(id, secObj ? secObj.num : '00');
     const el = document.getElementById(id);
     if (el) {
       el.scrollIntoView({ behavior: 'smooth', block: 'start' });

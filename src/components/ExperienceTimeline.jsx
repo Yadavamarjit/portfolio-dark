@@ -1,9 +1,15 @@
 import React, { useState } from 'react';
 import { WORK_EXPERIENCES } from '../data/portfolioData';
+import { trackExperienceTab } from '../utils/analytics';
 
 export default function ExperienceTimeline() {
   const [activeIdx, setActiveIdx] = useState(0);
   const activeExp = WORK_EXPERIENCES[activeIdx];
+
+  const handleTabClick = (idx, exp) => {
+    trackExperienceTab(exp.company, exp.role);
+    setActiveIdx(idx);
+  };
 
   return (
     <section id="experience" data-hud-label="EXPERIENCE" className="relative border-b border-hairline">
@@ -36,7 +42,7 @@ export default function ExperienceTimeline() {
           {WORK_EXPERIENCES.map((exp, idx) => (
             <button
               key={exp.company}
-              onClick={() => setActiveIdx(idx)}
+              onClick={() => handleTabClick(idx, exp)}
               className={`px-6 py-3 font-mono text-xs tracking-wider border-b-2 transition-all flex items-center gap-3 whitespace-nowrap cursor-pointer ${
                 activeIdx === idx
                   ? 'border-neonCyan text-white bg-white/5 font-semibold'
